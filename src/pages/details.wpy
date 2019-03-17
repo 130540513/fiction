@@ -1,0 +1,1163 @@
+<style lang="less">
+  #getUserInfo {
+    position:fixed;
+    top:0;
+    width:750rpx !important;
+    height:100% !important;
+    padding:0rpx !important;
+    z-index:999;
+    background-color:rgba(255, 255, 255, 0);
+    color:#fff;
+  }
+  page{
+    background-color: #f5f5f5;
+  }
+  .bookList{
+    width: 750rpx;
+    height: 340rpx;
+    background-color: #2d313c;
+  }
+  .booktitleInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 300rpx;
+    background-color: #2d313c;
+    padding: 20rpx 20rpx;
+  }
+  .booktitleInfo .cover,
+  .booktitleInfo .cover image{
+    width: 210rpx;
+    height: 280rpx;
+  }
+  .booktitleInfo .info{
+    margin-left: 20rpx;
+    width: 480rpx;
+    height: 280rpx;
+  }
+  .booktitleInfo .info view,
+  .booktitleInfo .info text{
+    width: 90%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .booktitleInfo .info .title{
+    color: #fff;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 38rpx;
+    font-size: 600;
+    margin-bottom: 20rpx;
+  }
+  .booktitleInfo .operating{
+    width: 107rpx;
+    height: 146rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .booktitleInfo .operating image{
+    width: 47rpx;
+    height: 47rpx;
+  }
+  .label view{
+    width: auto !important;
+    height: 36rpx !important;
+    line-height: 36rpx !important;
+    font-size: 20rpx !important;
+    border: 1rpx solid #b7b7b7;
+    display:inline-block;
+    padding: 0 10rpx;
+    margin-right: 10rpx;
+    border-radius: 10rpx;
+  }
+  .bookInfo,
+  .commentList,
+  .attentionAuthor,
+  .recommend,
+  .bookMoreInfo,
+  .tableOfContents{
+    margin-top: 10rpx;
+    background-color: #fff;
+    padding: 20rpx;
+    width: 710rpx;
+    height: auto;
+  }
+  .basicInfo{
+    width: 710rpx;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10rpx;
+  }
+  .basicInfo .basicSel{
+    width: 236rpx;
+  }
+  .basicInfo .basicSel text{
+    color: #999;
+    font-weight: 500;
+    font-size: 25rpx;
+  }
+  .basicInfo .basicSel view{
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+  }
+  .basicInfo .basicSel view:nth-child(2){
+    color: #333;
+    font-weight: 600;
+  }
+  .booktitleInfo .iconfont{
+    color: #ffcc01;
+    font-size: 39rpx;
+  }
+  .description{
+    position: relative;
+    height: 120rpx;
+    border-top: 1rpx solid #eaeaea;
+    color: #999;
+    font-size: 28rpx;
+    line-height: 45rpx;
+    padding: 20rpx 0;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .description .iconfont{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    font-size: 30rpx;
+  }
+  .bookInfo .label view {
+    color: #999;
+    font-size: 28rpx;
+    height: 40rpx;
+    background-color: #e6e6e6;
+    border-radius: 20rpx;
+    border-width: 0;
+  }
+  .tableOfContents{
+    height: 45rpx;
+  }
+  .tableOfContents view{
+    font-size: 30rpx;
+    height: 45rpx;
+    line-height: 45rpx;
+  }
+  .tableOfContents image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .tableOfContents view:nth-child(1){
+    float: left;
+    color: #333;
+  }
+  .tableOfContents view:nth-child(2){
+    float: right;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tableOfContents .iconfont{
+    font-size: 35rpx;
+    line-height: 70rpx;
+  }
+  .commentList{
+    min-height: 130rpx;
+    padding-top: 15rpx;
+  }
+  .commentList .title,
+  .commentList .title view{
+    font-size: 30rpx;
+    height: 65rpx;
+    line-height: 65rpx;
+  }
+  .commentList .title image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .commentList .title view:nth-child(1){
+    float: left;
+    color: #333;
+  }
+  .commentList .title view:nth-child(1) text{
+    font-size: 20rpx;
+  }
+  .commentList .title view:nth-child(2){
+    float: right;
+    color: #00a8ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .user{
+    display: flex;
+    align-items: center;
+    font-size: 28rpx;
+  }
+  .user image{
+    width: 50rpx;
+    height: 50rpx;
+    border-radius: 25rpx;
+    margin-right: 10rpx;
+  }
+  .commentList .description{
+    border: 0;
+  }
+  .commentInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+    font-size: 30rpx;
+  }
+  .commentInfo image{
+    width: 30rpx;
+    height: 30rpx;
+  }
+  .commentInfo .time{
+    width: 324rpx;
+  }
+  .commentInfo .operating{
+    width: 360rpx;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+ .commentInfo .operating .iconfont{
+    margin-top: -20rpx;
+  }
+  .commentInfo .operating view:nth-child(1){
+    margin-right: 10rpx;
+  }
+  .listCon{
+    border-bottom: 1rpx solid #f0f0f0;
+    padding-bottom: 10rpx;
+  }
+  .seeMore{
+    color: #00a8ff !important;
+  }
+  .attentionAuthor, .authorInfo{
+    height: 103rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+  }
+  .attentionAuthor image{
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 30rpx;
+    margin-right: 10rpx;
+  }
+  .authorInfo .info view:nth-child(1){
+    font-size: 40rpx;
+    color: #333;
+  }
+  .authorInfo .info view:nth-child(2){
+    font-size: 25rpx;
+    color: #999;
+  }
+  .attention{
+    width: 120rpx;
+    height: 45rpx;
+    line-height: 45rpx;
+    background-color: #00c0a4;
+    border-radius: 23rpx;
+    text-align: center;
+    color: #fff;
+  }
+  .recommend{
+    margin-bottom: 130rpx;
+  }
+  .recommendList{
+    width: 100%;
+    height: auto;
+  }
+  .recommendCon{
+    width: 140rpx;
+    display: inline-block;
+    margin: 20rpx 40rpx 0 0;
+    font-size: 30rpx;
+    color: #999;
+  }
+  .recommendCon:nth-child(4n){
+    margin: 20rpx 0 0 0;
+  }
+  .recommendCon image{
+    width: 140rpx;
+    height: 190rpx;
+  }
+  .recommendCon view{
+    width: 100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .bookMoreInfo{
+    height: auto;
+    margin-bottom: 110rpx;
+  }
+  .bookMoreInfo view{
+    font-size: 30rpx;
+    color: #666;
+    height: auto;
+    line-height: 50rpx;
+  }
+  .bookMoreInfo view:nth-child(1){
+    font-size: 40rpx;
+    color: #333;
+    margin-bottom: 30rpx;
+  }
+  .navSta{
+    position: fixed;
+    bottom: 0;
+    width: 750rpx;
+    height: 110rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+  }
+  .navSta .sel{
+    // width: 249rpx;
+    width: 373rpx;
+    height: 110rpx;
+    text-align: center;
+    border-radius: 1rpx solid #f0f0f0;
+    font-size: 30rpx;
+    color: #666;
+  }
+  .navSta .sel:nth-child(1){
+    background-color: #f4f4f4;
+    // color: #fff;
+  }
+  .navSta .sel:nth-child(2){
+    background-color: #00c0a4;
+    color: #fff;
+  }
+  // .navSta .sel:nth-child(3){
+  //   background-color: #00c0a4;
+  //   color: #fff;
+  // }
+  .navSta image{
+    width: 40rpx;
+    height: 40rpx;
+    margin-top: 15rpx;
+  }
+
+  .commentInfo .iconfont{
+    font-size: 33rpx;
+  }
+  .search{
+    padding: 20rpx 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search view{
+    height: 75rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search input{
+    width: 100%;
+    height: 100%;
+    color: #333;
+    font-size: 30rpx;
+  }
+  .search view:nth-child(1){
+    width: 600rpx;
+    border: 1rpx solid #f0f0f0;
+  }
+  .search view:nth-child(2){
+    width: 80rpx;
+    border: 1rpx solid #f0f0f0;
+    border-left: 0;
+    border-radius: 0 20rpx 20rpx 0;
+  }
+  .commentReply{
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 10;
+  }
+  .commentReplyList{
+    padding: 20rpx 5vw;
+    width: 90vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    margin-bottom: 130rpx;
+  }
+  .commentReplyUp{
+    width: 100vw;
+    height: 100rpx;
+    position: absolute;
+    bottom: 20rpx;
+  }
+  .icon-quxiao{
+    position: absolute;
+    top: 20rpx;
+    right: 20rpx;
+    color: #333;
+    z-index: 999;
+  }
+  .fenxiang{
+    position: absolute;
+    right: 40rpx;
+    top: 250rpx;
+    width: 60rpx;
+    height: 60rpx;
+    color: #fff !important;
+    border: 1rpx solid #fff;
+    border-radius: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2d313c !important;
+  }
+  .fenxiang .icon-fenxiang1{
+    color: #fff !important;
+    font-size: 26rpx;
+  }
+  .fenxiang::after {
+    border-radius: 98rpx;
+    border: 0; 
+  }
+</style>
+<template>
+  <view>
+    <view class="bookList">
+      <view class="booktitleInfo">
+        <view class="cover">
+          <image src="{{bookInfo.img}}" />
+        </view>
+        <view class="info">
+          <view class="title">{{bookInfo.name}}</view>
+          <view class="title">
+            <icon class="iconfont {{bookInfo.score >=2 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=4 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=6 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=8 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            <icon class="iconfont {{bookInfo.score >=10 ? 'icon-xingxing':'icon-xingxing1'}}" />
+            {{bookInfo.score}}
+          </view>
+          <view>作者:{{authorInfoData.pen_name}}</view>
+          <view>类型:{{bookInfo.name}}</view>
+          <view>
+            字数:
+            <text wx:if="{{bookInfo.wether_complete === 'Uncompelete'}}">连载</text>
+            <text wx:elif>完结</text>
+             |
+            {{bookInfo.words_count}}万字</view>
+          <view class="label">
+          </view>
+        </view>
+        <button class="fenxiang" type="primary" open-type="share" data-name="pageShare" id="share">
+          <icon class="iconfont icon-fenxiang1" />
+        </button>
+      </view>
+    </view>
+    <view class="bookInfo">
+      <view class="basicInfo">
+        <view class="basicSel">
+          <view>
+            {{bookInfo.read_person_count}}
+            <!-- <text>万</text> -->
+          </view>
+          <view>人气</view>
+        </view>
+        <view class="basicSel">
+          <view>
+            <!-- 点击量 -->
+            {{bookInfo.click_count}}
+            <!-- <text>万</text> -->
+          </view>
+          <view>点击</view>
+        </view>
+        <view class="basicSel">
+          <view>
+            <!-- // 得分人数 -->
+            {{bookInfo.stored_count}}
+            <!-- <text>万</text> -->
+          </view>
+          <view>粉丝</view>
+        </view>
+      </view>
+      <view class="description" style="{{descriptionShow}}">
+        {{bookInfo.intro}}
+        <icon @tap="descriptionShowRun" class="iconfont icon-jiantou-{{descriptionShow == '' ? 'xia':'shang'}}" />
+      </view>
+      <view class="label">
+        <!-- <view>1111</view>
+        <view>1111</view>
+        <view>1111</view>
+        <view>1111</view> -->
+      </view>
+    </view>
+    <view class="tableOfContents" @tap="goContents">
+      <view>目录</view>
+      <view>
+        查看目录
+        <icon class="iconfont icon-jiantouyou" />
+      </view>
+    </view>
+    <view class="commentList">
+      <view class="title">
+        <view>
+          书圈
+          <!-- <text>68.9万粉丝，18.3万条发言</text> -->
+        </view>
+        <view @tap="setcommentShow">写书评</view>
+      </view>
+      <view class="search" wx:if="{{setcomment}}">
+        <view>
+          <input type="text" bindinput="commentBook" placeholder="填写评论" />
+        </view>
+        <view @tap="updataComment"> 
+          <icon class="iconfont icon-wodetijiao" />
+        </view>
+      </view>
+      <view class="list">
+        <block wx:for="{{chapterCommentList}}" key="index" index="index" item="item">
+          <view class="listCon" data-id="{{item.id}}" data-level="{{item.level}}">
+            <view class="user">
+              <image src="{{item.profile}}" />
+              {{item.user_nickname}}
+            </view>
+            <view class="description">{{item.content}}</view>
+            <view class="commentInfo">
+              <view class="time">{{item.updated_at}}</view>
+              <view class="operating">
+                <view @tap="commentLike" data-id="{{item.id}}" data-level="{{item.level}}">
+                  <icon class="iconfont icon-dianzan" />
+                  {{item.likes_number}}
+                </view>
+                <view @tap="commentReplyShow" data-id="{{item.id}}">
+                  <icon class="iconfont icon-pinglun" />
+                  {{item.subCommentCount}}
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+        <view class="commentReply" wx:if="{{commentDomReplyShow}}">
+          <view class="iconfont icon-quxiao" @tap="commentReplyShow"></view>
+          <scroll-view scroll-y="hidden" class="commentReplyList">
+            <block wx:for="{{ReplyCon}}" key="index" index="index" item="item">
+              <view class="listCon" data-id="{{item.id}}" data-level="{{item.level}}">
+                <view class="user">
+                  <image src="{{item.profile}}" />
+                  {{item.user_nickname}}
+                </view>
+                <view class="description">{{item.content}}</view>
+                <view class="commentInfo">
+                  <view class="time">{{item.updated_at}}</view>
+                  <view class="operating"></view>
+                </view>
+              </view>
+            </block>
+            <view class="dataNullShow" wx:if="{{ReplyCon.length === 0}}">暂无回复</view>
+          </scroll-view>
+          <view class="commentReplyUp">
+            <view class="search">
+              <view>
+                <input type="text"  value='{{commentReplyValue}}' bindinput="commentReply" placeholder="填写回复" />
+              </view>
+              <view @tap="updataReply" data-id="{{replyId}}"> 
+                <icon class="iconfont icon-wodetijiao" />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="dataNullShow"  wx:if="{{chapterCommentList.length === 0}}">暂无评论</view>
+      <view class="dataNullShow seeMore" wx:if="{{nextReplyUrl !== ''}}" @tap="getMoreReplyCon">查看更多</view>
+    </view>
+    <!-- 若otherNovels中无数据，则该模块不显示 -->
+    <view class="recommend">
+      喜欢这本书的人也喜欢
+      <view class="recommendList">
+        <block wx:for="{{otherNovels}}" key="index" index="index" item="item">
+          <view class="recommendCon" @tap="recommendBook" data-id="{{item.id}}">
+            <image src="{{imgUrl + item.img}}" />
+            <view>{{item.name}}</view>
+          </view>
+        </block>
+        <view class="dataNullShow"  wx:if="{{chapterCommentList.length === 0}}">暂无列表</view>
+      </view>
+    </view>
+    <view class="navSta">
+      <view class="sel" @tap="clickStoreBook">
+        <icon class="iconfont icon-shujia" />
+        <view>加入书架</view>
+      </view>
+      <!-- <view class="sel">
+        <icon class="iconfont icon-dingyue" />
+        <view>批量订阅</view>
+      </view> -->
+      <view class="sel" @tap="lookBook">
+        <icon class="iconfont icon-shu1" />
+        <view>立即阅读</view>
+      </view>
+    </view>
+    <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
+    <gohome @childFn.user="goPage" wx:if="{{goHomeButton}}" />
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import gohome from '../components/navhome' // 进入书城按钮
+export default class Details extends wepy.page {
+  config = {
+    navigationBarTitleText: '详情'
+  }
+  components = {
+    gohome: gohome
+  }
+
+  mixins = []
+
+  data = {
+    bookid: '',
+    bookInfo: null,
+    otherNovels: [],
+    chapterCommentList: [],
+    commentConOne: '',
+    commentConTow: '',
+    commentDomReplyShow: false,
+    setcomment: false,
+    authorInfoData: null, // 作家信息
+    replyId: '',
+    ReplyCon: [],
+    nextReplyUrl: '',
+    commentReplyValue: '',
+    descriptionShow: '',
+    authorizationButton: false,
+    goHomeButton: false
+  }
+
+  computed = {}
+
+  methods = {
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    descriptionShowRun() {
+      if (this.descriptionShow) {
+        this.descriptionShow = ''
+      } else {
+        this.descriptionShow = 'height:auto'
+      }
+      this.$apply()
+    },
+    // 获取更多评论
+    getMoreReplyCon() {
+      this.runMoreReplyCon()
+    },
+    // 查看作者
+    goAuthor(e) {
+      let id = e.currentTarget.dataset.id
+      let authorInfoData = JSON.stringify(this.authorInfoData)
+      this.$navigate(`/pages/authorInfo?authorid=${id}&authorinfodata=${authorInfoData}`)
+    },
+    // 立即阅读
+    lookBook() {
+      wx.getStorage({
+        key: `bookid${this.bookid}`,
+        success: res => {
+          if (res.data) {
+            this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${res.data}&firsttime=${true}`)
+            // 订阅执行
+            this.subscriptionNovel(this.bookid, res.data)
+          }
+        },
+        fail: res => {
+          if (this.bookInfo.chapters.length === 0) {
+            wx.showModal({
+              title: '',
+              content: '暂无章节'
+            })
+            return
+          }
+          this.$navigate(`/pages/lookFiction?bookid=${this.bookid}&chapterid=${this.bookInfo.chapters[0].id}&firsttime=${true}`)
+          // 订阅执行
+          this.subscriptionNovel(this.bookid, this.bookInfo.chapters[0].id)
+        }
+      })
+    },
+    // 查看目录
+    goContents() {
+      // this.$navigate(`/pages/bookContents?bookinfo=${JSON.stringify(this.bookInfo)}`)
+      this.$navigate(`/pages/bookContents?id=${this.bookInfo.id}`)
+    },
+    // 点击推荐的书
+    recommendBook(e) {
+      this.bookid = e.currentTarget.dataset.id
+      // 获取小说详情
+      this.getBookDetails()
+      this.userLikeThisBookLikeOthers()
+      // 刷新当前页数据
+    },
+    // 加入书架
+    clickStoreBook() {
+      this.storeBook()
+    },
+    // 获取评论内容
+    commentBook(e) {
+      this.commentConOne = e.detail.value
+    },
+    commentReply(e) {
+      this.commentConTow = e.detail.value
+    },
+    // 提交评论
+    updataComment() {
+      // 提交一级评论
+      this.updataCommentCon()
+    },
+    // 提交回复
+    updataReply(e) {
+      // 提交二级评论
+      let id = e.currentTarget.dataset.id
+      this.updataReplyCon(id)
+    },
+    // 输入评论是否展示
+    setcommentShow() {
+      if (this.setcomment) {
+        this.setcomment = false
+      } else {
+        this.setcomment = true
+      }
+      this.$apply()
+    },
+    // 控制回复内容是否显示
+    commentReplyShow(e) {
+      this.replyId = e.currentTarget.dataset.id
+      if (this.commentDomReplyShow) {
+        this.commentDomReplyShow = false
+        // 获取评论列表
+        this.chapterCommentLists()
+      } else {
+        this.commentDomReplyShow = true
+        // 获取回复
+        this.getReplyCon(this.replyId)
+      }
+      this.$apply()
+    },
+    // 评论点赞
+    commentLike(e) {
+      // 评论id
+      let id = e.currentTarget.dataset.id
+      // 执行评论点赞
+      this.upCommentLike(id)
+    }
+  }
+
+  events = {}
+
+  onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
+    this.bookid = options.bookid
+    if (options.firsttime === 'share') {
+      // 通过分享进入
+      // 获取用户信息
+      this.goHomeButton = true
+      this.authorizationButton = true
+      // 获取用户信息
+      this.onGetUserInfo()
+    }
+    // 获取小说详情
+    this.getBookDetails(options.bookid)
+    // 获取推荐
+    this.userLikeThisBookLikeOthers()
+    // 获取评论
+    this.chapterCommentLists()
+  }
+  // 获取用户可以看的章节
+  subscription() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userSubscription`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.user_subscriptions
+          let i = 0
+          let bookId = parseInt(this.bookid)
+          let lookNovelChapter = []
+          for (i in data) {
+            if (data[i].novel_id === bookId) {
+              lookNovelChapter.push(data[i].novel_chapter_id)
+            }
+          }
+          i = 0
+          let y = 0
+          for (y in lookNovelChapter) {
+            for (i in this.bookInfo.chapters) {
+              if (this.bookInfo.chapters[i].id === lookNovelChapter[y]) {
+                this.bookInfo.chapters[i].wether_vip = 'NotVip'
+              }
+            }
+          }
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 订阅小说
+  subscriptionNovel(bookid, chapterId) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/subscriptionNovel`,
+      method: 'PUST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        novel_id: bookid,
+        novel_chapter_id: chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+        } else {
+          // wx.showModal({
+          //   title: '',
+          //   content: data.data.errmsg
+          // })
+        }
+      }
+    })
+  }
+  // 执行评论点赞
+  upCommentLike(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/novelLike`,
+      method: 'POST',
+      data: {
+        user_id: this.userInfo.id,
+        novel_id: this.bookid,
+        novelComment_id: id
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '点赞成功'
+          })
+          // 获取评论
+          this.chapterCommentLists()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 提交一级评论
+  updataCommentCon() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/firstNovelComment`,
+      method: 'POST',
+      data: {
+        user_id: this.userInfo.id,
+        novel_id: this.bookid,
+        content: this.commentConOne
+      },
+      success: data => {
+        if (data.data.success) {
+          this.setcomment = false
+          this.$apply()
+          wx.showModal({
+            title: '',
+            content: '评论成功'
+          })
+          // 获取评论
+          this.chapterCommentLists()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 提交回复
+  updataReplyCon(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/secondNovelComment`,
+      method: 'POST',
+      data: {
+        user_id: this.userInfo.id,
+        novel_id: this.bookid,
+        parent_id: id,
+        content: this.commentConTow
+      },
+      success: data => {
+        if (data.data.success) {
+          this.setData({
+            'commentReplyValue': ''
+          })
+          wx.showModal({
+            title: '',
+            content: '评论成功'
+          })
+          // 获取评论
+          this.getReplyCon(id)
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取回复
+  getReplyCon(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/subNovelCommentList/${id}`,
+      method: 'GET',
+      data: {
+        novel_id: this.bookid,
+        parent_id: id
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.sub_novel_comment_list
+          this.ReplyCon = data.data
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+
+  // 获取小说详情
+  getBookDetails(id) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.bookInfo = data.data.novel
+          // this.bookInfo.img = this.$parent.getImgUrl(this.bookInfo.img)
+          this.bookInfo.score = parseFloat(this.bookInfo.score)
+          this.bookid = this.bookInfo.id
+          // this.bookInfo.words_count = Math.floor(this.bookInfo.words_count / 10000)
+          this.authorInfoData = data.data.author
+          this.$apply()
+          // 获取用户可以看的章节
+          this.subscription()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 加入书架
+  storeBook() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/storeBook/${this.bookid}`,
+      method: 'PUT',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '添加成功'
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 喜欢这本书的人也喜欢
+  userLikeThisBookLikeOthers() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userLikeThisBookLikeOther/${this.bookid}`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          this.otherNovels = data.data.other_novels
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取评论列表
+  chapterCommentLists() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/NovelCommentList/${this.bookid}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          data = data.data.first_novel_comment
+          this.chapterCommentList = data.data
+          this.nextReplyUrl = ''
+          if (data.meta.pagination.links) {
+            this.nextReplyUrl = data.meta.pagination.links.next
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取更多评论
+  runMoreReplyCon() {
+    wx.request({
+      url: this.nextReplyUrl,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          data = data.data.first_novel_comment
+          let ReplyConList = data.data
+          for (let i in ReplyConList) {
+            this.chapterCommentList.push(ReplyConList[i])
+          }
+          this.nextReplyUrl = ''
+          if (data.meta.pagination.links) {
+            this.nextReplyUrl = data.meta.pagination.links.next
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+    // 获取用户信息
+  onGetUserInfo() {
+    // 查看是否授权
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: res => {
+              this.userInfo = res.userInfo
+              if (this.userInfo) {
+                this.authorizationButton = false
+                this.avatarUrl = this.userInfo.avatarUrl
+                this.nickName = this.userInfo.nickName
+                // 数据生效
+                this.$apply()
+                // 提交用户信息
+                this.setUserInfo(this.userInfo)
+                // 登陆
+                // this.userLogin(this.userInfo)
+                this.$parent.globalData.userInfo = this.userInfo
+                this.$apply()
+              }
+            }
+          })
+        } else {
+          this.clickWeekBangs()
+        }
+      }
+    })
+  }
+  // 提交用户信息
+  setUserInfo(userInfo) {
+    // if (this.$parent.globalData.openId) {
+    //   // 用户收藏的书籍
+    //   this.myStore()
+    //   return
+    // }
+    wepy.login({
+      success: res => {
+        if (res.code) {
+          this.code = res.code
+          wx.request({
+            url: `${this.$parent.globalData.requestUrl}/api/addOrUpdateUser`,
+            method: 'POST',
+            data: {
+              code: res.code,
+              nick_name: this.userInfo.nickName,
+              profile: this.userInfo.avatarUrl
+            },
+            success: data => {
+              if (data.data.success) {
+                // 获取用户信息,及openID  并存入全局
+                this.userInfo = data.data.user
+                this.openId = this.userInfo.open_id
+                this.$parent.globalData.userInfo = this.userInfo
+                this.$parent.globalData.openId = this.openId
+                // 获取用户可以看的章节
+                this.subscription()
+                this.$apply()
+              } else {
+                wx.showModal({
+                  title: '',
+                  content: data.data.errmsg
+                })
+              }
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  }
+  // 分享页面
+  onShareAppMessage(res) {
+    let url = `pages/details?bookid=${this.bookInfo.id}&firsttime=share`
+    console.log(url)
+    return {
+      title: `${this.bookInfo.name}--幻世中文网`,
+      desc: '',
+      // 图片路径
+      imageUrl: this.bookInfo.img,
+      path: url
+    }
+  }
+}
+</script>

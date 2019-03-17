@@ -1,0 +1,280 @@
+<style lang="less">
+page{
+  background-color: #f8f8f8;
+}
+.listTitle{
+  padding: 0 20rpx;
+  width: 710rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-bottom: 1rpx solid #eaeaea;
+  background-color: #fff;
+}
+.listTitle view:nth-child(1){
+  font-size: 35rpx;
+  font-weight: 600;
+  color: #333;
+}
+.listTitle view:nth-child(2),
+.icon-jiantouyou{
+  font-size: 25rpx;
+  color: #999;
+}
+.listTitle image{
+  width: 30rpx;
+  height: 30rpx;
+}
+page .listTitle:nth-child(4){
+  margin-top: 20rpx;
+}
+.list{
+  width: 710rpx;
+  padding: 20rpx;
+  display: block;
+  background-color: #fff;
+}
+.item{
+  width: 355rpx;
+  height: 130rpx;
+  display: inline-flex;
+  margin: 10rpx 0;
+}
+.info{
+  margin: 0;
+  padding: 0;
+}
+.item image{
+  width: 100rpx;
+  height: 130rpx;
+}
+.item image, .item .info{
+  display: inline-block;
+}
+.name, .description{
+  padding-left: 20rpx;
+  width: 235rpx;
+  height: 65rpx;
+  line-height: 65rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.name{
+  font-size: 30rpx;
+  color: #333;
+}
+.description{
+  font-size: 25rpx;
+  color: #999;
+}
+</style>
+<template>
+  <view>
+    <navTop @childFn.user="goPage" />
+    <!-- <view class="listTitle">
+      <view>男生</view>
+      <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
+        新增：110
+      </view>
+    </view>
+    <view class="list">
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">玄幻</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">仙侠</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">武侠</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">都市</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">架空历史</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">惊悚悬疑</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+    </view>
+    <view class="listTitle">
+      <view>女生</view>
+      <view data-id="{{thisfirstCategoryId}}" @tap="clickMore" data-typename="完本精品" data-url="compeleteBoutique">
+        新增：110
+      </view>
+    </view>
+    <view class="list">
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">都市言情</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">穿越重生</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">仙侠情缘</view>
+          <view class="description">附带信息</view>
+        </view>
+      </view>
+      <view class="item" @tap="goTypeList">
+        <image src="/img/1.png" />
+        <view class="info">
+          <view class="name">惊悚悬疑</view>
+          <view class="description">惊悚悬疑</view>
+        </view>
+      </view>
+    </view> -->
+    <block wx:for="{{firstCategoryData}}" key="index" index="index" item="item" wx:key="index">
+      <view class="listTitle">
+      <!-- <view class="listTitle" wx:if="{{secondCategoryData[index].length > 0}}"> -->
+        <view>{{item.name}}</view>
+        <view data-id="{{item.id}}" @tap="clickMore" data-typename="{{item.name}}">
+          <!-- 新增：110 -->
+          <!-- <icon class="iconfont icon-jiantouyou" /> -->
+        </view>
+      </view>
+      <view class="list">
+        <block wx:for="{{secondCategoryData[index]}}" key="index-son" wx:for-index="index-son" wx:for-item="item">
+          <view class="item" data-id="{{item.id}}" data-title="{{firstCategoryData[index].name + item.name}}" @tap="goTypeList">
+            <image src="{{item.img}}" />
+            <view class="info">
+              <view class="name">{{item.name}}</view>
+              <!-- <view class="description">{{item.updated_at}}</view> -->
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import navTop from '../components/navTop' // 顶部导航
+import nav from '../components/nav' // 底部导航
+export default class User extends wepy.page {
+  config = {
+    navigationBarTitleText: '分类'
+  }
+  // 生命组件ID
+  components = {
+    // 底部导航
+    nav: nav,
+    navTop: navTop
+  }
+
+  mixins = []
+
+  data = {
+    userInfo: null,
+    openId: '',
+    firstCategoryData: null,
+    secondCategoryData: []
+  }
+
+  computed = {}
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    goTypeList(e) {
+      let typeName = e.currentTarget.dataset.title
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/bookListAndType?typename=${typeName}&typeid=${id}`)
+    }
+  }
+
+  events = {}
+
+  onLoad() {
+    // 个人信息初始化
+    this.userInfo = this.$parent.globalData.userInfo
+    this.openId = this.$parent.globalData.openId
+    this.$apply()
+    // 获取一级分类
+    this.firstCategory()
+    // 获取二级分类
+  }
+  // 获取一级分类
+  firstCategory() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/firstCategory`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.firstCategoryData = data.data.first_categories
+          this.thisfirstCategoryId = this.firstCategoryData[0].id
+          this.$apply()
+          // 获取二级分类
+          let i = 0
+          for (i in this.firstCategoryData) {
+            this.secondCategory(this.firstCategoryData[i].id, i)
+          }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取二级分类
+  secondCategory(id, i) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/secondCategory/${id}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.secondCategoryData[i] = data.data.second_categories
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
+</script>

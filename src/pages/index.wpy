@@ -1,0 +1,650 @@
+<style lang="less">
+  page{
+    background-color: #f7f7f7;
+  }
+  #getUserInfo {
+    position:fixed;
+    top:0;
+    width:750rpx !important;
+    height:100% !important;
+    padding:0rpx !important;
+    z-index:999;
+    background-color:rgba(255, 255, 255, 0);
+    color:#fff;
+  }
+  .swiper{
+    background-color: #fff;
+    width: 750rpx;
+    height: 340rpx;
+  }
+  .swiper image{
+    width: 100%;
+    height: 100%;
+  }
+  .sel{
+    width: 150rpx;
+    text-align: center;
+  }
+
+  .booklist .list:last-of-type{
+    margin-bottom: 120rpx;
+  }
+  .list{
+    padding: 20rpx;
+    width: 710rpx;
+    height: auto;
+    background-color: #fff;
+    margin-top: 20rpx;
+  }
+  .listTitle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80rpx;
+    line-height: 80rpx;
+  }
+  .listTitle view:nth-child(1){
+    font-size: 35rpx;
+    font-weight: 600;
+    color: #333;
+  }
+  .listTitle view:nth-child(2),
+  .icon-jiantouyou{
+    font-size: 25rpx;
+    color: #999;
+  }
+  .listTitle image{
+    width: 30rpx;
+    height: 30rpx;
+  }
+  .con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 175rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    background-color: #fff;
+  }
+  .con .cover{
+    width: 107rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .cover image{
+    width: 107rpx;
+    height: 146rpx;
+  }
+  .con .info{
+    margin-left: 20rpx;
+    width: 615rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .info view{
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx !important;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .con .info text{
+    font-size: 25rpx;
+  }
+  .con .info .title{
+    color: #333;
+    height: 60rpx;
+    line-height: 70rpx;
+    font-size: 38rpx;
+    font-size: 600;
+  }
+  .conSidelong{
+    width: 210rpx;
+    height: 350rpx;
+    padding: 10rpx;
+    display: inline-block;
+  }
+  .conSidelong image{
+    width: 210rpx;
+    height: 300rpx;
+  }
+  .conSidelong .name{
+    width: 210rpx;
+    height: 50rpx;
+    font-size: 28rpx;
+    line-height: 50rpx;
+    text-align: center;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+</style>
+<template>
+  <view>
+    <navTop @childFn.user="goPage" />
+    <swiper class="swiper" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <!-- <block wx:for="{{swiperData}}" key="index" index="index" item="item">
+        <swiper-item>
+          <image src="{{item.img}}" data-id="{{item.id}}" @tap="goBookDetails" class="slide-image" />
+        </swiper-item>
+      </block> -->
+      <!-- <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/author1.jpg" @tap="getAuthor" class="slide-image" />
+      </swiper-item>
+      <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/author2.jpg" @tap="getAuthor" class="slide-image" />
+      </swiper-item> -->
+      <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/xzhdxLb.jpg" @tap="goBookDetails" data-id="50" />
+      </swiper-item>
+      <swiper-item>
+        <image src="https://fiction.beaconway.cn/uploads/images/hrjjLb.jpg" @tap="goBookDetails" data-id="28" />
+      </swiper-item>
+    </swiper>
+    <view class="booklist">
+      <!-- xx新书 -->
+      <view class="list" wx:if="{{newBooks.length > 0}}">
+        <view class="listTitle">
+          <view>新书推荐</view>
+          <view data-id="{{thisfirstCategoryId}}" wx:if="{{newBooks.length >= 3}}" @tap="clickMore" data-typename="新书推荐" data-url="new_book">
+            更多
+            <icon class="iconfont icon-jiantouyou" />
+          </view>
+        </view>
+        <view class="listCon">
+          <block wx:for="{{newBooks}}" key="index" index="index" item="item">
+            <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
+              <image src="{{item.img}}" />
+              <view class="name">{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 畅销精选 -->
+      <view class="list" wx:if="{{bestSellerData.length > 0}}">
+        <view class="listTitle">
+          <view>畅销精选</view>
+          <view data-id="{{thisfirstCategoryId}}" wx:if="{{bestSellerData.length >= 3}}" @tap="clickMore" data-typename="畅销精选" data-url="best_seller">
+            更多
+            <icon class="iconfont icon-jiantouyou" />
+          </view>
+        </view>
+        <view class="listCon">
+          <block wx:for="{{bestSellerData}}" key="index" index="index" item="item">
+            <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+              <view class="cover">
+                <image src="{{item.img}}" />
+              </view>
+              <view class="info">
+                <view class="title">{{item.name}}</view>
+                <view>
+                  <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                  <text wx:elif>完结</text>
+                   · {{item.words_count}}万字</view>
+                <view>{{item.intro}}</view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 主编力荐 -->
+      <view class="list" wx:if="{{editorRecommendData.length > 0}}">
+        <view class="listTitle">
+          <view>主编力荐</view>
+          <view data-id="{{thisfirstCategoryId}}" wx:if="{{editorRecommendData.length >= 3}}" @tap="clickMore" data-typename="主编力荐" data-url="recommend">
+            更多
+            <icon class="iconfont icon-jiantouyou" />
+          </view>
+        </view>
+        <view class="listCon">
+          <block wx:for="{{editorRecommendData}}" key="index" index="index" item="item">
+            <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
+              <image src="{{item.img}}" />
+              <view class="name">{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+      <!-- 24小时热销 -->
+      <view class="list" wx:if="{{twentyFourHourHotSale.length > 0}}">
+        <view class="listTitle">
+          <view>24小时热销</view>
+          <view data-id="{{thisfirstCategoryId}}" wx:if="{{twentyFourHourHotSale.length >= 3}}" @tap="clickMore" data-typename="24小时热销" data-url="score">
+            更多
+            <icon class="iconfont icon-jiantouyou" />
+          </view>
+        </view>
+        <view class="listCon">
+          <block wx:for="{{twentyFourHourHotSale}}" key="index" index="index" item="item">
+            <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
+              <image src="{{item.img}}" />
+              <view class="name">{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 猜你喜欢 -->
+      <view class="list" wx:if="{{freeNewNovel.length > 0}}">
+        <view class="listTitle">
+          <view>猜你喜欢</view>
+          <view data-id="{{thisfirstCategoryId}}" wx:if="{{freeNewNovel.length >= 3}}" @tap="clickMore" data-typename="猜你喜欢" data-url="like">
+            更多
+            <icon class="iconfont icon-jiantouyou" />
+          </view>
+        </view>
+        <view class="listCon">
+          <block wx:for="{{freeNewNovel}}" key="index" index="index" item="item">
+            <view class="conSidelong" @tap="goBookDetails" data-id="{{item.id}}">
+              <image src="{{item.img}}" />
+              <view class="name">{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+      </view>
+
+      <!-- 完本精品 -->
+      <view class="list" wx:if="{{compeleteBoutique.length > 0}}">
+        <view class="listTitle">
+          <view>经典完本</view>
+          <view data-id="{{thisfirstCategoryId}}" wx:if="{{compeleteBoutique.length >= 3}}" @tap="clickMore" data-typename="完本精品" data-url="end_book">
+            更多
+            <icon class="iconfont icon-jiantouyou" />
+          </view>
+        </view>
+        <view class="listCon">
+          <block wx:for="{{compeleteBoutique}}" key="index" index="index" item="item">
+            <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+              <view class="cover">
+                <image src="{{item.img}}" />
+              </view>
+              <view class="info">
+                <view class="title">{{item.name}}</view>
+                <view>
+                  <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                  <text wx:elif>完结</text>
+                   · {{item.words_count}}万字</view>
+                <view>{{item.intro}}</view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+// 页面跳转，传参写法
+// this.$redirect('./page2', {a: 1, b: 2})
+// this.$redirect({
+//   url: './pages?a=1&b=2'
+// });
+// this.$navigate(url)
+
+
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
+
+// vertical-align:middle;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+
+// 自动换行
+// word-break:break-all;
+
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
+<script>
+
+import wepy from 'wepy'
+import navTop from '../components/navTop' // 顶部导航
+import nav from '../components/nav' // 底部导航
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: '书城'
+  }
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav,
+    navTop: navTop
+  }
+
+  mixins = []
+
+  data = {
+    imgUrl: '',
+    indicatorDots: true,
+    autoplay: true,
+    interval: 5000,
+    duration: 1000,
+    typeListData: [],
+    firstCategoryData: [], // 一级分类列表数据
+    navTopId: 1, // 一级分类对应的选中项
+    // popularUncompelete: [], // 人气连载
+    twentyFourHourHotSale: [], // 24小时热销榜
+    freeNewNovel: [], // 点击周榜
+    compeleteBoutique: [], // 完本精品
+    newBooks: [], // 新书
+    bestSellerData: [], // 人气连载
+    poplarCategory: [], // 人气分类
+    editorRecommendData: [], // 人气分类书
+    swiperData: [] // 轮播图
+  }
+
+  computed = {}
+
+  onLoad() {
+    this.imgUrl = this.$parent.globalData.imgUrl
+    // 加载分类--顶部
+    // 加载轮播图
+    this.getSwiperData()
+    // 新书
+    this.newBooksOfFirstCategory()
+    // 畅销精品(畅销精品)
+    this.bestSeller()
+    // 主编力荐
+    this.editorRecommend()
+    // 24小时热销榜
+    this.twentyFourHourHotSale()
+    // 猜你喜欢
+    this.clickWeekBangs()
+    // 猜你喜欢
+    this.clickWeekBangs()
+    // 完本精品
+    this.compeleteBoutiques()
+  }
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    // 进入书本详情
+    goBookDetails(e) {
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
+    },
+    // 进入分类列表
+    goBookListAndType(e) {
+      let typeName = e.currentTarget.dataset.title
+      let id = this.thisfirstCategoryId
+      this.$navigate(`/pages/bookListAndType?typename=${typeName}&typeid=${id}`)
+    },
+    // 进入更多
+    clickMore(e) {
+      let typename = e.currentTarget.dataset.typename
+      let url = e.currentTarget.dataset.url
+      let data = null
+      switch (url) {
+        case 'new_book': // 新书推荐
+          data = this.newBooks
+          break
+        case 'best_seller': // 畅销精选
+          data = this.bestSellerData
+          break
+        case 'recommend': // 主编力荐
+          data = this.editorRecommendData
+          break
+        case 'score': // 24小时热销
+          data = this.twentyFourHourHotSale
+          break
+        case 'twentyFourHourHotSale': // 猜你喜欢
+          data = this.freeNewNovel
+          break
+        case 'end_book': // 完本精品
+          data = this.compeleteBoutique
+          break
+        default:
+          break
+      }
+      data = JSON.stringify(data)
+      this.$navigate(`/pages/indexSonList?typename=${typename}&url=${url}&listdata=${data}`)
+    },
+    // 顶部导航点击
+    navTopClick(e) {
+      let id = e.currentTarget.dataset.id
+      this.navTopId = id
+      switch (id) {
+        case 1:
+          break
+        case 2:
+          this.$navigate(`/pages/indexSonList`)
+          break
+        case 3:
+          this.$navigate(`/pages/typeList`)
+          break
+        default:
+          break
+      }
+    },
+    // 点击一级分类
+    clickFirstCategory(e) {
+      let id = e.currentTarget.dataset.id
+      this.thisTypeNmae = e.currentTarget.dataset.name
+      this.thisfirstCategoryId = id
+      // 获取二级分类
+      this.secondCategory(id)
+    },
+    getAuthor() {
+      this.$navigate(`/pages/getAuthorCon`)
+    }
+  }
+
+  events = {}
+
+  // 加载轮播图
+  getSwiperData() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/rolling`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.swiperData = data.data.rolling_img
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 新书
+  newBooksOfFirstCategory() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/new_book/0`,
+      method: 'GET',
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.newBooks = data.data.data
+          if (this.newBooks.length > 6) {
+            this.newBooks = this.newBooks.slice(0, 6)
+          } else {
+            this.newBooks = this.newBooks
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 畅销精品(畅销精品)
+  bestSeller() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/best_seller/0`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.code === 'ture') {
+          this.bestSellerData = data.data.data
+          if (this.bestSellerData.length > 6) {
+            this.bestSellerData = this.bestSellerData.slice(0, 6)
+          } else {
+            this.bestSellerData = this.bestSellerData
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 主编力荐
+  editorRecommend() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/recommend/0`,
+      method: 'GET',
+      success: data => {
+        if (data.data.code === 'ture') {
+          // 主编力荐
+          this.editorRecommendData = data.data.data
+          if (this.editorRecommendData.length > 6) {
+            this.editorRecommendData = this.editorRecommendData.slice(0, 6)
+          } else {
+            this.editorRecommendData = this.editorRecommendData
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 24小时热销榜
+  twentyFourHourHotSale() {
+    // 调用一级分类
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/score/0`,
+      method: 'GET',
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.twentyfourhourHotSale = data.data.data
+          if (this.twentyfourhourHotSale.length > 6) {
+            this.twentyFourHourHotSale = this.twentyfourhourHotSale.slice(0, 6)
+          } else {
+            this.twentyFourHourHotSale = this.twentyfourhourHotSale
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 猜你喜欢
+  clickWeekBangs() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/like/0`,
+      method: 'GET',
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.freeNewNovel = data.data.data
+          if (this.freeNewNovel.length > 6) {
+            this.freeNewNovel = this.freeNewNovel.slice(0, 6)
+          } else {
+            this.freeNewNovel = this.freeNewNovel
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 完本精品
+  compeleteBoutiques() {
+    // 调用一级分类
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/end_book/0`,
+      method: 'GET',
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.compeleteBoutique = data.data.data
+          if (this.compeleteBoutique.length > 6) {
+            this.compeleteBoutique = this.compeleteBoutique.slice(0, 6)
+          } else {
+            this.compeleteBoutique = this.compeleteBoutique
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
+// 面向对象实验
+// onLoad() {
+//   let getuser = new onGetUserInfo()
+//   if (getuser) {
+//     getuser.setUserInfo()
+//   }
+// }
+// function onGetUserInfo() {
+//   // 查看是否授权
+//   wx.getSetting({
+//     success: res => {
+//       if (res.authSetting['scope.userInfo']) {
+//         // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+//         wx.getUserInfo({
+//           success: res => {
+//             let userInfo = res.userInfo
+//             if (userInfo) {
+//               // this.authorizationButton = false
+//               // this.avatarUrl = this.userInfo.avatarUrl
+//               // this.nickName = this.userInfo.nickName
+//               this.userInfo = userInfo
+//               return true
+//             }
+//           }
+//         })
+//       }
+//     }
+//   })
+// }
+// onGetUserInfo.prototype.setUserInfo = function() {
+// }
+// WECHAT_MINI_PROGRAM_APPID=wx31173647591cdb8c
+// WECHAT_MINI_PROGRAM_SECRET=f4164a26a94752f93293c27f514301f2
+// WECHAT_PAYMENT_APPID=wx31173647591cdb8c
+// WECHAT_PAYMENT_MCH_ID=1499393562
+// WECHAT_PAYMENT_KEY=5iiU9qQon8vDZUYDhYBSXL3gA049nM8r
+// WECHAT_PAYMENT_CERT_PATH=/home/wwwroot/hengrun.beaconway.cn/hengrun_credentials/                  apiclient_cert.pem
+// WECHAT_PAYMENT_KEY_PATH=/home/wwwroot/hengrun.beaconway.cn/hengrun_credentials/a                  piclient_key.pem
+</script>

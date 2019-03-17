@@ -1,0 +1,274 @@
+<style lang="less">
+@font-face {
+  font-family: 'iconfont';  /* project id 983084 */
+  src: url('//at.alicdn.com/t/font_983084_iegp08kgv7.eot');
+  src: url('//at.alicdn.com/t/font_983084_iegp08kgv7.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_983084_iegp08kgv7.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_983084_iegp08kgv7.woff') format('woff'),
+  url('//at.alicdn.com/t/font_983084_iegp08kgv7.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_983084_iegp08kgv7.svg#iconfont') format('svg');
+}
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size: 50rpx;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-xingxing:before { content: "\e60a"; }
+.icon-xingxing1:before { content: "\e621"; }
+.icon-piaowu:before { content: "\e652"; }
+.icon-jiantouyou:before { content: "\e62d"; }
+.icon-jiantouzuo:before { content: "\e620"; }
+.icon-yanjing:before { content: "\e668"; }
+.icon-book:before { content: "\e616"; }
+.icon-yueliang:before { content: "\e6b8"; }
+.icon-shusheng:before { content: "\e60b"; }
+.icon-huanyihuan:before { content: "\e653"; }
+.icon-quxiao:before { content: "\e6be"; }
+.icon-dianzan:before { content: "\e611"; }
+.icon-pinglun:before { content: "\e629"; }
+.icon-dingyue:before { content: "\e63f"; }
+.icon-shanchu:before { content: "\e645"; }
+.icon-wodetijiao:before { content: "\e6d3"; }
+// 导航
+.icon-shujia:before { content: "\e622"; }
+.icon-chazhao:before { content: "\e606"; }
+.icon-sousuo:before { content: "\e66a"; }
+// 会员等级
+.icon-vip0:before { content: "\e600"; }
+.icon-vip1:before { content: "\e600"; }
+.icon-vip2:before { content: "\e601"; }
+.icon-vip3:before { content: "\e602"; }
+.icon-vip4:before { content: "\e603"; }
+.icon-vip5:before { content: "\e604"; }
+.icon-vip6:before { content: "\e605"; }
+// 分类
+.icon-fenlei:before { content: "\e60d"; }
+.icon-paihangbang:before { content: "\e60c"; }
+.icon-VIP:before { content: "\e60f"; }
+.icon-shu:before { content: "\e623"; }
+.icon-shu1:before { content: "\e762"; }
+.icon-mianfei:before { content: "\e62f"; }
+// 读书页
+.icon-mulu:before { content: "\e61a"; }
+.icon-taiyang:before { content: "\e635"; }
+.icon-jindu:before { content: "\e607"; }
+.icon-setting:before { content: "\e784"; }
+.icon-piao:before { content: "\e744"; }
+.icon-xiaoxi:before { content: "\e67e"; }
+.icon-shenqingchengweiVIP:before { content: "\e608"; }
+.icon-bangzhu:before { content: "\e77c"; }
+.icon-money:before { content: "\e609"; }
+.icon-jiantou:before { content: "\e662"; }
+.icon-remove-1-copy:before { content: "\e61b"; }
+.icon-jiantou-shang:before { content: "\e62c"; }
+.icon-jiantou-xia:before { content: "\e60e"; }
+.icon-suo:before { content: "\e61f"; }
+.icon-mulu1:before { content: "\e610"; }
+.icon-weibiaoti2fuzhi16:before { content: "\e630"; }
+.icon-fenxiang1:before { content: "\e64e"; }
+
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+view,text {
+  font-size:16px;
+  font-family:PingFangSC-Regular,Helvetica,"Droid Sans",Arial,sans-serif;
+}
+icon {
+  vertical-align:middle;
+}
+.mask{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(51, 51, 51, 0.5);
+  position: fixed;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dataNullShow{
+  width: 100%;
+  height: 200rpx;
+  line-height: 200rpx;
+  text-align: center;
+  font-size: 35rpx;
+  color: #ccc;
+}
+
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/bookshelf', // 书架
+      'pages/index', // 书城
+      'pages/user', // 个人中心
+      'pages/pay', // 支付
+      'pages/authorInfo', // 作者信息
+      'pages/browseRecord', // 浏览历史
+      'pages/indexSonList', // 书城分类列表
+      'pages/details', // 详情
+      'pages/typeList', // 分类列表
+      'pages/ranking', // 排行
+      'pages/bookListAndType', // 分类，包含列表
+      'pages/search', // 搜索
+      'pages/getAuthorCon', // 作家招募
+      'pages/readDescription', // 作家招募
+      'pages/bookContents', // 目录
+      'pages/help', // 目录
+      'pages/lookFiction' // 看书页
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#212323',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'white'
+      // navigationStyle: 'custom'
+    }
+  }
+
+  globalData = {
+    userInfo: null,
+    // requestUrl: 'http://140.143.203.12:8095',
+    // imgUrl: 'http://140.143.203.12:8095'
+    requestUrl: 'https://fiction.beaconway.cn',
+    imgUrl: 'https://fiction.beaconway.cn',
+    navActionTop: ['action', 'noAction', 'noAction']
+  }
+
+  constructor () {
+    super()
+    this.use('requestfix')
+  }
+
+  onLaunch() {
+    // this.testAsync()
+  }
+
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  }
+  // 图片路径解析
+  getImgUrl(imgUrl) {
+    // https://img.1391.com/api/v1/bookcenter/cover/1/2044462/2044462_e80d3461cf30401293568bff7fa8966d.jpg/
+    // http://img.1391.com/api/v1/bookcenter/cover/1/2044462/2044462_e80d3461cf30401293568bff7fa8966d.jpg/
+    // http%3A%2F%2Fimg.1391.com%2Fapi%2Fv1%2Fbookcenter%2Fcover%2F1%2F2044462%2F2044462_e80d3461cf30401293568bff7fa8966d.jpg%2F
+    imgUrl = imgUrl.split('/').pop()
+    imgUrl = imgUrl.replace(/%3A/g, ':')
+    imgUrl = imgUrl.replace(/%2F/g, '/')
+    imgUrl = imgUrl.replace(/http:/g, 'https:')
+    return imgUrl
+  }
+  // 包含图片路径列表数据中图片路径解析
+  getImgUrlList(list) {
+    let i = 0
+    for (i in list) {
+      list[i].img = this.getImgUrl(list[i].img)
+    }
+    return list
+  }
+  // 包含图片路径列表数据中图片路径解析
+  getImgUrlNovelList(list) {
+    let i = 0
+    for (i in list) {
+      list[i].novel.img = this.getImgUrl(list[i].novel.img)
+    }
+    return list
+  }
+  // 获取用户信息
+  onGetUserInfo() {
+    // 查看是否授权
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: res => {
+              this.userInfo = res.userInfo
+              if (this.userInfo) {
+                this.authorizationButton = false
+                this.avatarUrl = this.userInfo.avatarUrl
+                this.nickName = this.userInfo.nickName
+                // 数据生效
+                this.$apply()
+                // 提交用户信息
+                this.setUserInfo(this.userInfo)
+                // 登陆
+                // this.userLogin(this.userInfo)
+                this.globalData.userInfo = this.userInfo
+                this.$apply()
+              }
+            }
+          })
+        } else {
+          this.clickWeekBangs()
+        }
+      }
+    })
+  }
+  // 提交用户信息
+  setUserInfo(userInfo) {
+    // if (this.$parent.globalData.openId) {
+    //   // 用户收藏的书籍
+    //   this.myStore()
+    //   return
+    // }
+    wepy.login({
+      success: res => {
+        if (res.code) {
+          this.code = res.code
+          wx.request({
+            url: `${this.globalData.requestUrl}/api/addOrUpdateUser`,
+            method: 'POST',
+            data: {
+              code: res.code,
+              nick_name: this.userInfo.nickName,
+              profile: this.userInfo.avatarUrl
+            },
+            success: data => {
+              if (data.data.success) {
+                // 获取用户信息,及openID  并存入全局
+                this.userInfo = data.data.user
+                this.openId = this.userInfo.open_id
+                this.globalData.userInfo = this.userInfo
+                this.globalData.openId = this.openId
+                // 用户收藏的书籍
+                this.myStore()
+                this.$apply()
+              } else {
+                wx.showModal({
+                  title: '',
+                  content: data.data.errmsg
+                })
+              }
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  }
+}
+</script>

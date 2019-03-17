@@ -1,0 +1,1402 @@
+<style lang="less">
+#getUserInfo {
+    position:fixed;
+    top:0;
+    width:750rpx !important;
+    height:100% !important;
+    padding:0rpx !important;
+    z-index:999;
+    background-color:rgba(255, 255, 255, 0);
+    color:#fff;
+  }
+  .cover, .con{
+    width: 720rpx;
+    padding: 0 20rpx;
+    min-height: 100vh;
+    height: auto;
+    color: #333;
+    background-color: #ccc;
+  }
+  .img{
+    width: 750rpx;
+    height: 600rpx;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+  }
+  .img image{
+    width: 200rpx;
+    height: 300rpx;
+    margin: auto;
+    margin-top: 250rpx;
+    border: 10rpx solid #fff;
+  }
+  .info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .bookName{
+    font-size: 50rpx;
+    color: #333;
+    font-weight: 700;
+  }
+  .author{
+    color: #999;
+    font-size: 30rpx;
+  }
+  .info view{
+    width: 250rpx;
+  }
+  .attrName{
+    font-size: 40rpx;
+    color: #333;
+    font-weight: 600;
+  }
+  .attrs{
+    margin-top: 100rpx;
+  }
+  .nav{
+    position: fixed;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ccc;
+    width: 100vw;
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav .sel{
+    width: 187rpx;
+    font-size: 30rpx;
+    text-align: center;
+  }
+  .nav .sel view{
+    font-size: 28rpx;
+  }
+  .nav .sel .iconfont{
+    font-size: 40rpx;
+  }
+  .nav .action{
+    color: #ed424b;
+  }
+  .setBookshelf{
+    position: fixed;
+    right: 0;
+    top: 20rpx;
+    width: 200rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 35rpx;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ccc;
+    border-radius: 40rpx 0 0 40rpx;
+  }
+  .sharebutton{
+    position: fixed;
+    right: 0;
+    top: 130rpx;
+    width: 200rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 35rpx;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    color: #ccc !important;
+    border-radius: 40rpx 0 0 40rpx;
+  }
+  .sharebutton icon {
+    font-size: 30rpx;
+    margin-right: 20rpx;
+  }
+  .tableOfContents{
+    width: 650rpx;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    transition: transform .15s;
+    background-color: #fff;
+    transform: translate(0,0);
+    color: #33373d;
+    fill: currentColor;
+    font-family: sans-serif;
+    line-height: 1.5;
+    z-index: 16;
+  }
+  .tableOfCon{
+    width: 100rpx;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 16;
+  }
+  .chapterNav{
+    width: 650rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    position: relative;
+    background-color: #fff;
+    visibility: visible;
+    font-size: 100%;
+    font-weight: 400;
+    margin-right: auto;
+    margin-left: auto;
+    table-layout: fixed;
+    display: table-cell;
+    color: #ed424b;
+    border-bottom: 1rpx solid #ed424b;
+  }
+  .catelogX{
+    position: absolute;
+    top: 2.8125rem;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+  }
+  .module-header{
+    line-height: 28px;
+    position: static;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 28px;
+    border-top: 0;
+    padding: 9px 1rem;
+  }
+  .module-header-l{
+    float: left;
+  }
+  .module-header-r{
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10rpx;
+  }
+  .module-header-l span,
+  .module-header-r span{
+    line-height: 28px;
+    font-size: .875rem;
+    font-weight: 500;
+  }
+  .module-header-r .action{
+    background-color: #00aa91;
+    color: #fff;
+  }
+  .module-header-r view{
+    border: 1rpx solid #00aa91;
+    padding: 0 10rpx;
+    height: 35rpx;
+    line-height: 35rpx;
+    font-size: 20rpx;
+  }
+  .module-header-r view:nth-child(1){
+    border-radius: 18rpx 0 0 18rpx;
+  }
+  .module-header-r view:nth-child(2){
+    border-radius: 0 18rpx 18rpx 0;
+  }
+  .module-header-l span{
+    font-weight: 600;
+  }
+  .volumes{
+    border-bottom: 1px solid #f0f1f2;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+  }
+  .volumes li {
+    position: relative;
+    display: list-item;
+    text-align: -webkit-match-parent;
+    list-style: none;
+    padding-right: 2rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font: 15px/22px a;
+    display: block;
+    overflow: hidden;
+    padding: 12px 1rem;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+    border-top: 1px solid #f0f1f2;
+  }
+  .volumes li .iconfont{
+    position: absolute;
+    top: 11rpx;
+    right: 30rpx;
+    color: #999;
+    font-size: 30rpx;
+  }
+  .volumes .action{
+    color: #ed424b;
+  }
+  .readBtnProg{
+    position: fixed;
+    right: 0;
+    bottom: 100rpx;
+    left: 0;
+    color: #ccc;
+    border-bottom:1rpx solid #333;
+    background-color: rgba(0,0,0,.6);
+    height:120rpx;
+    z-index: 15;
+  }
+  .read-prog-info{
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .read-prog-next, .read-prog-prev{
+    font-size: .875rem;
+    position: absolute;
+    top: .5rem;
+    height: 1.25rem;
+    padding: .5rem 0;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: pointer;
+  }
+  .read-prog-prev{
+    left: .375rem;
+  }
+  .read-prog-next {
+    right: .375rem;
+  }
+  .read-prog-val{
+    height: 120rpx;
+    font-size: .875rem;
+    margin: 0 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ell{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 100%;
+    display: block;
+    margin-block-start: 1.33em;
+    margin-block-end: 1.33em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .readProgVal{
+    font-size: .75rem;
+    opacity: .8;
+    speak: digits;
+    unicode-bidi: -webkit-isolate;
+    text-align: center;
+    color: #ccc;
+  }
+
+  .readOptSet{
+    visibility: visible;
+    transition: none;
+    opacity: 1;
+    position: fixed;
+    right: 0;
+    bottom: 100rpx;
+    left: 0;
+    transform: translateY(.5px);
+    background-clip: padding-box;
+    color: #fff;
+    border-bottom: 0;
+    background-color: rgba(0,0,0,.6);
+    height: 220rpx;
+  }
+  .read-set-font{
+    padding-top: .5rem;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    height: 100rpx;
+  }
+  .readFontDown, .readFontUp{
+    font-size: 1rem;
+    position: absolute;
+    top: .75rem;
+    width: 3rem;
+    height: 1.5rem;
+    padding: .5rem 0;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    outline: 0;
+    cursor: pointer;
+  }
+  .readFontDown{
+    left: 0;
+  }
+  .readFontUp{
+    right: 0;
+  }
+  .read-font-bar{
+    margin: 0 3rem;
+    padding: 1.125rem 0;
+    display: block;
+    color: #fff;
+    text-align: center;
+  }
+  .readSetSkin, .readSetLayout{
+    // padding: .9375rem 1.25rem;
+    // padding-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+    height: 100rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .readSetSkin view{
+    width: 200rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    margin: 0 25rpx;
+    border-radius: 10rpx;
+  }
+  .readSetSkin .action{
+    color: #ed424b !important;
+    border: 1rpx solid #ed424b !important;
+  }
+  .default{
+    background-color: #dccb9c;
+    color: #dccb9c;
+    // border: 1rpx solid #dccb9c;
+  }
+  .blue{
+    background-color: #ccdade;
+    color: #ccdade;
+    // border: 1rpx solid #ccdade;
+  }
+  .green{
+    background-color: #cddfcd;
+    color: #cddfcd;
+    // border: 1rpx solid #cddfcd;
+  }
+  .light{
+    background-color: #cfcfcf;
+    color: #cfcfcf;
+    // border: 1rpx solid #cfcfcf;
+  }
+  .defaultGg{
+    color: #1b1b1b !important;
+    background-color: #dccb9c;
+  }
+  .blueGg{
+    color: #1b1b1b !important;
+    background-color: #ccdade;
+  }
+  .greenGg{
+    color: #1b1b1b !important;
+    background-color: #cddfcd;
+  }
+  .lightGg{
+    color: #1b1b1b !important;
+    background-color: #cfcfcf;
+  }
+  .nightMode{
+    color: #858585 !important;
+    background-color: #101112 !important;
+  }
+  .readSetLayout view{
+    width: 400rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    margin: 0 25rpx;
+    border-radius: 10rpx;
+    border: 1rpx solid #ccc;
+    border-radius: 10rpx;
+    color: #ccc;
+    font-size: 30rpx;
+  }
+  .readSetLayout .action{
+    border: 1rpx solid #fff;
+    color: #fff;
+  }
+  .switch{
+    position: fixed;
+    top: 25vh;
+    left: 25vw;
+    width: 50vw;
+    height: 40vh;
+    z-index: 15;
+  }
+  .pageTurning{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+  }
+  .nextAndPrevious{
+    position: relative;
+    width: 710rpx;
+    height: 150rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .nextAndPrevious view{
+    width: 250rpx;
+    height: 60rpx;
+    margin: 30rpx 68.5rpx;
+    border: 1rpx solid #0099CC;
+    background-color: #0099CC;
+    border-radius: 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    z-index: 15;
+  }
+  .icon-dianzan,.icon-piaowu{
+    width: 80rpx !important;
+    height: 80rpx !important;
+    border-radius: 40rpx !important;
+    font-size: 50rpx;
+    background-color: #ed424b !important;
+    border-color:  #ed424b !important;
+  }
+  .setBookshelf, .nav, .readOptSet,.sharebutton{
+    z-index: 15;
+  }
+</style>
+<template>
+  <view>
+    <view wx:if="{{coverShow}}" class="cover {{showModel}}" @tap="coverHide">
+      <view class="img">
+        <image src="/img/1.png" />
+      </view>
+      <view class="info bookName">{{bookInfo.name}}</view>
+      <view class="info author">豆豆 著</view>
+      <view class="info attrs">
+        <view>
+          <view class="attrName">玄幻</view>
+          <view class="author">类型</view>
+        </view>
+        <view>
+          <view class="attrName">2018.04.11</view>
+          <view class="author">上架</view>
+        </view>
+        <view>
+          <view class="attrName">{{bookInfo.words_count}}万</view>
+          <view class="author">连载(字)</view>
+        </view>
+      </view>
+    </view>
+    <view class="switch" @tap="showSettingDom"></view>
+    <view class="pageTurning" @tap="pageTurning"></view>
+    <view wx:if="{{!coverShow}}" class="con {{showModel}}">
+      
+      <!-- 小说内容显示 -->
+      <text style="font-size: {{fontSize}}rpx">{{novelChapter.content.content}}</text>
+      <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
+        <view @tap="chapterLikes" class="iconfont icon-dianzan"></view>
+        <view @tap="addMontTicket" class="iconfont icon-piaowu"></view>
+      </view>
+      <view class="nextAndPrevious"  wx:if="{{nextAndPrevious}}">
+        <view data-page="previous" @tap="goPreviousPage">上一章</view>
+        <view data-page="next" @tap="goNextPage">下一章</view>
+      </view>
+    </view>
+    <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view>
+    <!-- <view class="setBookshelf" wx:if="{{showSetting}}" @tap="storeBook">加入书架</view> -->
+    <button class="sharebutton" wx:if="{{showSetting}}" type="primary" open-type="share" data-name="pageShare" id="share">
+      <icon class="iconfont icon-fenxiang1" />分享
+    </button>
+    <view class="nav" wx:if="{{showSetting}}">
+      <!-- <view class="sel action" @tap="tableOfContentsShow">
+        <icon class="iconfont icon-mulu" />
+        <view>目录</view>
+      </view> -->
+      <view class="sel" @tap="tableOfContentsShow">
+        <icon class="iconfont icon-mulu1" />
+        <view>目录</view>
+      </view>
+      <view class="sel" @tap="readBtnProgShow">
+        <icon class="iconfont icon-jindu" />
+        <view>进度</view>
+      </view>
+      <view class="sel" @tap="readOptSet">
+        <icon class="iconfont icon-weibiaoti2fuzhi16" />
+        <view>设置</view>
+      </view>
+      <view class="sel" @tap="atNightSet">
+        <icon class="iconfont icon-taiyang" />
+        <view>夜间</view>
+      </view>
+      <!-- <view class="sel">
+        <icon class="iconfont icon-pinglun" />
+        <view>评论</view>
+      </view> -->
+    </view>
+    <!-- 目录对应 -->
+    <view wx:if="{{tableOfContentsDomShow}}">
+      <view class="tableOfCon" @tap="tableOfContentsShow"></view>
+      <view class="tableOfContents">
+        <view class="chapterNav">目录</view>
+        <view class="catelogX">
+          <view class="module-header">
+            <view class="module-header-l">
+              <span>
+                共
+                <span>{{bookInfo.chapters.length}}</span>
+                章
+              </span>
+            </view>
+            <view class="module-header-r" @tap="chaptersReverse">
+              <view class="{{order == 'noorder' ? 'action':'noaction'}}">倒序</view>
+              <view class="{{order == 'order' ? 'action':'noaction'}}">正序</view>
+            </view>
+          </view>
+          <ul class="volumes">
+            <block wx:for="{{bookInfo.chapters}}" key="index" index="index" item="item">
+              <li @tap="lookBook" data-id="{{item.id}}" data-vip="{{item.wether_vip}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}}">
+                {{item.title}}
+                <icon wx:if="{{item.wether_vip !== 'NotVip'}}" class="iconfont icon-suo" />
+              </li>
+              <!-- <li @tap="lookBook" data-id="{{item.id}}" data-saleAmount="{{item.sale_amount}}" data-wordsCount="{{item.words_count}}" class="{{item.wether_vip}} action">{{item.title}}</li> -->
+            </block>
+          </ul>
+        </view>
+      </view>
+    </view>
+    <!-- 进度对应 -->
+    <view class="readBtnProg" wx:if="{{readBtnProgDomShow}}">
+      <view class="read-prog-info">
+        <view class="read-prog-prev" data-page="previous" @tap="goPreviousPage">
+          <icon class="iconfont icon-jiantouzuo" />
+          上一章
+        </view>
+        <view class="read-prog-next" data-page="next" @tap="goNextPage">
+          下一章
+          <icon class="iconfont icon-jiantouyou" />
+        </view>
+        <view class="read-prog-val">
+          <view class="ell">{{novelChapter.title}}</view>
+        </view>
+      </view>
+    </view>
+    <!-- 设置对应 -->
+    <view class="readOptSet" wx:if="{{readOptSetDomShow}}">
+      <view class="read-set-font">
+        <view class="readFontDown" @tap="fontSizeDown">A-</view>
+        <view class="readFontUp" @tap="fontSizeUp">A+</view>
+        <view class="read-font-bar">{{fontSize}}</view>
+      </view>
+      <view class="readSetSkin">
+        <view class="default {{showModel == 'defaultGg' ? 'action':'noaction'}}" data-color="defaultGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+        <view class="blue {{showModel == 'blueGg' ? 'action':'noaction'}}" data-color="blueGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+        <view class="green {{showModel == 'greenGg' ? 'action':'noaction'}}" data-color="greenGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+        <view class="light {{showModel == 'lightGg' ? 'action':'noaction'}}" data-color="lightGg" @tap="setBgColor">
+          <span>√</span>
+        </view>
+      </view>
+      <!-- <view class="readSetLayout">
+        <view class="action">
+          <span>上下滑动</span>
+        </view>
+        <view>
+          <span>左右滑动</span>
+        </view>
+      </view> -->
+    </view>
+    <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGetUserInfo"></button>
+    <gohome @childFn.user="goPage" wx:if="{{goHomeButton}}" />
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import gohome from '../components/navhome' // 进入书城按钮
+export default class Lookfiction extends wepy.page {
+  config = {
+    navigationBarTitleText: '章节名称',
+    disableScroll: true
+  }
+  components = {
+    gohome: gohome
+  }
+
+  mixins = []
+
+  data = {
+    showSetting: false, // 控制设置框体的显示
+    coverShow: false,
+    tableOfContentsDomShow: false, // 目录是否显示
+    readBtnProgDomShow: false, // 进度控制是否显示
+    readOptSetDomShow: false, // 设置显示
+    showModel: '', // 显示模型，及背景控制
+    fontSize: 36, // 默认字体大小
+    novelChapter: null, // 章节数据
+    bookInfo: null, // 书信息
+    chapters: null, // 目录
+    nextUrl: '', // 下一页
+    previousUrl: '', // 上一页
+    nextAndPrevious: true, // 显示上一页下一页按钮
+    order: 'order',
+    goBotten: 0,
+    authorizationButton: false,
+    goHomeButton: false,
+    userInfo: null
+  }
+
+  // computed = {
+  //   gohome: gohome
+  // }
+
+  methods = {
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    // 字体变大
+    fontSizeUp() {
+      this.fontSize += 1
+      wx.setStorageSync('fontsoze', this.fontSize)
+    },
+    // 字体变小
+    fontSizeDown() {
+      this.fontSize -= 1
+      wx.setStorageSync('fontsoze', this.fontSize)
+    },
+    // 目录倒序/顺序切换
+    chaptersReverse() {
+      this.bookInfo.chapters = this.bookInfo.chapters.reverse()
+      if (this.order === 'order') {
+        this.order = 'noorder'
+      } else {
+        this.order = 'order'
+      }
+      this.$apply()
+    },
+    // 封面隐藏
+    coverHide() {
+      this.coverShow = false
+      this.$apply()
+    },
+    // 点击目录
+    lookBook(e) {
+      let vip =  e.currentTarget.dataset.vip
+      if (vip === 'Vip') {
+        if (this.userInfo.bi_count !== 0) {
+          this.showSetting = false
+          this.tableOfContentsDomShow = false
+          this.chapterId = e.currentTarget.dataset.id
+          this.goBotten = 0
+          // this.$apply()
+          // 订阅执行
+          this.subscriptionNovel(this.bookid, this.chapterId)
+          // 获取本章小说详情
+          this.chapterDetail()
+        } else {
+          wx.showModal({
+            title: '',
+            content: '此章节为VIP章节,请充值'
+          })
+        }
+      } else {
+        this.showSetting = false
+        this.tableOfContentsDomShow = false
+        this.chapterId = e.currentTarget.dataset.id
+        this.goBotten = 0
+        // this.$apply()
+        // 订阅执行
+        this.subscriptionNovel(this.bookid, this.chapterId)
+        // 获取本章小说详情
+        this.chapterDetail()
+      }
+      
+    },
+    // 点击上一页
+    goPreviousPage(e) {
+      this.goBotten = 0
+      // this.$apply()
+      this.goPage(this.previousUrl)
+    },
+    // 点击下一页
+    goNextPage(e) {
+      this.goBotten = 0
+      // this.$apply()
+      this.goPage(this.nextUrl)
+    },
+    // 章节点赞
+    chapterLikes() {
+      this.runChapterLikes()
+    },
+    // 投月票
+    addMontTicket() {
+      this.runAddMontTickets()
+    },
+    // 加入书架
+    storeBook() {
+      this.runStoreBook()
+    }
+  }
+
+  events = {}
+
+  onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
+    // 书的ID
+    this.bookid = options.bookid
+    // 章节列表下标,可定位到某一章
+    this.chapterId = options.chapterid
+    if (options.firsttime === 'share') {
+      // 通过分享进入
+      // 获取用户信息
+      this.goHomeButton = true
+      this.authorizationButton = true
+      // 获取用户信息
+      this.onGetUserInfo()
+    }
+    this.$apply()
+    // 初始化页面时，控制日夜间模式
+    this.getAtNightStatus()
+    // 获取字体大小
+    this.getFontSize()
+    // 获取小说详情
+    this.getBookDetails()
+    // 获取用户可以看的章节
+    this.subscription()
+    // // 获取本章小说详情
+    this.chapterDetail(this.bookid, this.chapter)
+  }
+  goPage(url) {
+    // this.novelChapter.content.content = ''
+    // // 回到页面顶部
+    // wx.pageScrollTo({
+    //   scrollTop: 0
+    // })
+    this.getNextAndPreviousData(url)
+  }
+  // 投月票执行
+  runAddMontTickets() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/addMontTicket`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        novel_id: this.bookid,
+        ticket_count: 1
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '投票成功'
+          })
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 点赞执行
+  runChapterLikes() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/chapterLike`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '点赞成功'
+          })
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取小说详情
+  getBookDetails() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/novelDetail/${this.bookid}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.bookInfo = data.data.novel
+          // 获取用户可以看的章节
+          // this.bookInfo = this.subscription(data.data.novel)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取用户可以看的章节
+  subscription(bookInfo) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userSubscription`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.user_subscriptions
+          
+          let i = 0
+          let bookId = parseInt(this.bookid)
+          let lookNovelChapter = []
+          for (i in data) {
+            if (data[i].novel_id === bookId) {
+              lookNovelChapter.push(data[i].novel_chapter_id)
+            }
+          }
+          i = 0
+          let y = 0
+          for (y in lookNovelChapter) {
+            for (i in bookInfo.chapters) {
+              if (bookInfo.chapters[i].id === lookNovelChapter[y]) {
+                bookInfo.chapters[i].wether_vip = 'NotVip'
+              }
+            }
+          }
+          this.chapters = bookInfo.chapters
+          return bookInfo
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 获取本章小说详情
+  chapterDetail() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/chapterDetail`,
+      method: 'GET',
+      data: {
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.novel_chapter
+          this.novelChapter = data.data[0]
+          // 碰到空格换行
+          this.novelChapter.content.content = this.contentsplit(this.novelChapter.content.content)
+          // 回到页面顶部
+          wx.pageScrollTo({
+            scrollTop: 0
+          })
+          // 根据获取到的参数修改页面标题
+          wx.setNavigationBarTitle({
+            title: this.novelChapter.title
+          })
+          // this.novelChapter
+          // 上一章请求地址
+          this.previousUrl = ''
+          this.nextUrl = ''
+          if (data.meta.pagination.links.length !== 0) {
+            // 下一章请求地址
+            this.nextUrl = data.meta.pagination.links.next
+            // 上一章请求地址
+            this.previousUrl = data.meta.pagination.links.previous
+          }
+          if (this.nextUrl) {
+            // 用于订阅下一章
+            this.getNextInfo(this.nextUrl)
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 分享页面
+  onShareAppMessage(res) {
+    let url = `pages/lookFiction?bookid=${this.bookid}&chapterid=${this.chapterId}&firsttime=share`
+    return {
+      title: `${this.bookInfo.name}--${this.novelChapter.title}--幻世中文网`,
+      desc: '',
+      // 图片路径
+      imageUrl: this.bookInfo.img,
+      path: url
+    }
+  }
+  // 下拉触底执行
+  // onReachBottom() {}
+  getNextAndPreviousData(url) {
+    wx.request({
+      url: url,
+      method: 'GET',
+      data: {
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
+        // chapter_id: 1
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.novel_chapter
+          // this.novelChapter.content.content = ''
+          // // 回到页面顶部
+          // wx.pageScrollTo({
+          //   scrollTop: 0
+          // })
+          this.novelChapter = data.data[0]
+          if (this.novelChapter.wether_vip === 'Vip') {
+            if (this.userInfo.bi_count === 0) {
+              wx.showModal({
+                title: '',
+                content: '此章节为VIP章节,请充值'
+              })
+              return
+            }
+          }
+          // this.novelChapter.content.content = ''
+          // 回到页面顶部
+          wx.pageScrollTo({
+            scrollTop: 0
+          })
+          // 碰到空格换行
+          this.novelChapter.content.content = this.contentsplit(this.novelChapter.content.content)
+          // 根据获取到的参数修改页面标题
+          wx.setNavigationBarTitle({
+            title: this.novelChapter.title
+          })
+          wx.setStorageSync(`bookid${this.bookid}`, this.novelChapter.id)
+          this.previousUrl = ''
+          this.nextUrl = ''
+          if (data.meta.pagination.links.length !== 0) {
+            // 下一章请求地址
+            this.nextUrl = data.meta.pagination.links.next
+            // 上一章请求地址
+            this.previousUrl = data.meta.pagination.links.previous
+          }
+          if (this.nextUrl) {
+            // 用于订阅下一章
+            this.getNextInfo(this.nextUrl)
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  contentsplit(content) {
+    // 文字中间的空格字符{　}复制这里{ }
+    let space = null
+    if (content.indexOf('　') != -1) {
+      space = '　　'
+    } else if (content.indexOf(' ') != -1) {
+      space = '  '
+    }
+    content = content.split(space)
+    let i = 0
+    let con = ''
+    for (i in content) {
+      con += '  '
+      con += content[i]
+      con += '\n  '
+    }
+    
+    // con.replace(/ /g,"\n")
+    return con
+  }
+  // 获取下一掌的信息，用于订阅下一章
+  getNextInfo(nextUrl) {
+    wx.request({
+      url: nextUrl,
+      method: 'GET',
+      data: {
+        novel_id: this.bookid,
+        chapter_id: this.chapterId
+        // chapter_id: 1
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.novel_chapter
+          if (data.data.length !== 0) {
+            let novelChapter = data.data[0]
+            let chapterId = novelChapter.id
+            // 订阅执行
+            this.subscriptionNovel(this.bookid, chapterId)
+          }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 订阅小说
+  subscriptionNovel(bookid, chapterId) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/subscriptionNovel`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        novel_id: bookid,
+        novel_chapter_id: chapterId
+      },
+      success: data => {
+        if (data.data.success) {
+        } else {
+          // wx.showModal({
+          //   title: '',
+          //   content: data.data.errmsg
+          // })
+        }
+      }
+    })
+  }
+  // 获取字体大小
+  getFontSize() {
+    // 1为日间模式，0为夜间模式
+    wx.getStorage({
+      key: 'fontsoze',
+      success: res => {
+        if (res.data) {
+          this.fontSize = res.data
+          this.$apply()
+        } else {
+          this.fontSize = 30
+          this.$apply()
+        }
+      }
+    })
+  }
+  pageTurning(e) {
+    // console.log(e)
+    let y = 300
+    let botton = 0
+    let thisY = e.detail.y - this.goBotten
+    wx.getSystemInfo({
+      success: res => {
+        if (thisY >= y) {
+          botton  = this.goBotten + res.windowHeight - 50
+          this.goBotten += res.windowHeight - 50
+        } else {
+          botton  = this.goBotten - res.windowHeight - 50
+          this.goBotten -= res.windowHeight - 50
+        }
+        // console.log(res.windowWidth)
+        // console.log(res.windowHeight)
+        // console.log(botton)
+        wx.pageScrollTo({
+          scrollTop: botton
+        })
+        
+      }
+    })
+  }
+  // 控制设置框体的显示
+  showSettingDom() {
+    if (this.showSetting) {
+      this.hideAllFrameDom()
+      this.showSetting = false
+    } else {
+      this.hideAllFrameDom()
+      this.showSetting = true
+    }
+  }
+  // 控制目录显示
+  tableOfContentsShow() {
+    if (this.tableOfContentsDomShow) {
+      this.hideAllFrameDom()
+    } else {
+      this.hideAllFrameDom()
+      this.tableOfContentsDomShow = true
+    }
+  }
+  // 进度控制显示
+  readBtnProgShow() {
+    if (this.readBtnProgDomShow) {
+      this.hideAllFrameDom()
+    } else {
+      this.hideAllFrameDom()
+      this.readBtnProgDomShow = true
+    }
+  }
+  // 设置框显示
+  readOptSet() {
+    if (this.readOptSetDomShow) {
+      this.hideAllFrameDom()
+    } else {
+      this.hideAllFrameDom()
+      this.readOptSetDomShow = true
+    }
+  }
+  // 隐藏所有设置显示（二级框体）
+  hideAllFrameDom() {
+    // 目录显示
+    this.tableOfContentsDomShow = false
+    // 进度显示
+    this.readBtnProgDomShow = false
+    // 设置显示
+    this.readOptSetDomShow = false
+  }
+  // 日夜模式切换
+  atNightSet() {
+    // 此处定义：1为日间模式，0为夜间模式
+    wx.getStorage({
+      key: 'atNightStatus',
+      success: res => {
+        if (res.data) {
+          // 当前为日间模式，设置为夜间模式
+          wx.setStorageSync('atNightStatus', 0)
+          this.showModel = 'nightMode'
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
+          // 如果未日间模式，则控制显示背景
+        } else {
+          // 当前为夜间模式，设置为日间模式
+          wx.setStorageSync('atNightStatus', 1)
+          // 设置日间模式背景
+          this.dayMode()
+        }
+      },
+      fail: res => {
+        // 当前为日间模式，设置为夜间模式
+        wx.setStorageSync('atNightStatus', 0)
+        // 夜间模式
+        this.showModel = 'nightMode'
+        // 修改title背景颜色，字体颜色
+        this.change(this.showModel)
+        this.$apply()
+      }
+    })
+  }
+  // 初始化页面时，控制日夜间模式
+  getAtNightStatus() {
+    // 1为日间模式，0为夜间模式
+    wx.getStorage({
+      key: 'atNightStatus',
+      success: res => {
+        if (res.data) {
+          // 日间模式,控制显示背景
+          this.dayMode()
+        } else {
+          // 夜间模式
+          this.showModel = 'nightMode'
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 背景设置
+  setBgColor(e) {
+    let selColor = e.currentTarget.dataset.color
+    wx.setStorageSync('bg', selColor)
+    wx.setStorageSync('atNightStatus', 1)
+    this.showModel = selColor
+    // 修改title背景颜色，字体颜色
+    this.change(this.showModel)
+  }
+  // 日间模式
+  dayMode() {
+    wx.getStorage({
+      key: 'bg',
+      success: res => {
+        if (res.data) {
+          // 日间模式
+          this.showModel = res.data
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
+          // 如果未日间模式，则控制显示背景
+        } else {
+          this.showModel = 'defaultGg'
+          // 修改title背景颜色，字体颜色
+          this.change(this.showModel)
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 获取顶部需要显示的颜色
+  change(showModel) {
+    let fontColor = '#000000'
+    let bgColor = '#dccb9c'
+    switch (showModel) {
+      case 'nightMode': // 夜间模式
+        this.setcolor(fontColor = '#ffffff', bgColor = '#000000')
+        break
+      case 'defaultGg':
+        this.setcolor(fontColor, bgColor = '#dccb9c')
+        break
+      case 'blueGg':
+        this.setcolor(fontColor, bgColor = '#ccdade')
+        break
+      case 'greenGg':
+        this.setcolor(fontColor, bgColor = '#cddfcd')
+        break
+      case 'lightGg':
+        this.setcolor(fontColor, bgColor = '#cfcfcf')
+        break
+      default:
+        this.setcolor(fontColor, bgColor = '#dccb9c')
+    }
+  }
+  // 修改顶部标题颜色
+  setcolor(fontColor, bgColor) {
+    wx.setNavigationBarColor({
+      frontColor: fontColor, // 必写项
+      backgroundColor: bgColor, // 传递的颜色值
+      animation: { // 可选项
+        duration: 400,
+        timingFunc: 'easeIn'
+      }
+    })
+  }
+  // 加入书架
+  runStoreBook() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/storeBook/${this.bookid}`,
+      method: 'PUT',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '添加成功'
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 获取用户信息
+  onGetUserInfo() {
+    // 查看是否授权
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: res => {
+              this.userInfo = res.userInfo
+              if (this.userInfo) {
+                this.authorizationButton = false
+                this.avatarUrl = this.userInfo.avatarUrl
+                this.nickName = this.userInfo.nickName
+                // 数据生效
+                this.$apply()
+                // 提交用户信息
+                this.setUserInfo(this.userInfo)
+                // 登陆
+                // this.userLogin(this.userInfo)
+                this.$parent.globalData.userInfo = this.userInfo
+                this.$apply()
+              }
+            }
+          })
+        } else {
+          this.clickWeekBangs()
+        }
+      }
+    })
+  }
+  // 提交用户信息
+  setUserInfo(userInfo) {
+    // if (this.$parent.globalData.openId) {
+    //   // 用户收藏的书籍
+    //   this.myStore()
+    //   return
+    // }
+    wepy.login({
+      success: res => {
+        if (res.code) {
+          this.code = res.code
+          wx.request({
+            url: `${this.$parent.globalData.requestUrl}/api/addOrUpdateUser`,
+            method: 'POST',
+            data: {
+              code: res.code,
+              nick_name: this.userInfo.nickName,
+              profile: this.userInfo.avatarUrl
+            },
+            success: data => {
+              if (data.data.success) {
+                // 获取用户信息,及openID  并存入全局
+                this.userInfo = data.data.user
+                this.openId = this.userInfo.open_id
+                this.$parent.globalData.userInfo = this.userInfo
+                this.$parent.globalData.openId = this.openId
+                // 获取用户可以看的章节
+                this.subscription()
+                this.$apply()
+              } else {
+                wx.showModal({
+                  title: '',
+                  content: data.data.errmsg
+                })
+              }
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  }
+}
+</script>

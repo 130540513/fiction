@@ -1,0 +1,225 @@
+<style lang="less">
+  .containerleft {
+    min-height: 100vh;
+    height: auto;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: #eee;
+    float: left;
+    width: 200rpx;
+    margin-bottom: 120rpx;
+  }
+  .bookClass {
+    width: 180rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+    display: inline-block;
+    text-align: left;
+    padding-left: 20rpx;
+    border-bottom: 1rpx solid #E5E5E5;
+  }
+  .action {
+    background: #fff;
+    color: #E64340;
+    border-left: 5rpx solid #E64340;
+    border-radius: 10rpx 0 0 10rpx;
+  }
+
+
+  .listCon {
+    height: 100vh;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    float: right;
+    width: 550rpx;
+  }
+  .con{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 550rpx;
+    height: 175rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    background-color: #fff;
+  }
+  .con .cover{
+    width: 107rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .cover image{
+    width: 107rpx;
+    height: 146rpx;
+  }
+  .con .info{
+    margin-left: 20rpx;
+    width: 400rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .con .info view{
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .con .info .title{
+    color: #333;
+    height: 60rpx;
+    line-height: 70rpx;
+    font-size: 30rpx;
+    font-size: 600;
+  }
+</style>
+<template>
+  <scroll-view scroll-y="hidden">
+    <view>
+      <view class="containerleft">
+        <repeat for="{{ typeList }}" item="item">
+          <li class="bookClass {{thissecondCategoryId == item.id ? 'action':'noaction'}}" @tap="changebookClass" data-url='{{ item.url }}' data-id='{{ item.id }}'>
+            {{ item.name }}
+          </li>
+        </repeat>
+        <view wx:if="{{secondCategoryList.length == 0}}" class="dataNullShow">暂无子类型</view>
+      </view>
+      <view class="listCon">
+        <!-- bookList -->
+        <block wx:for="{{bookList}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{ item.id }}">
+            <view class="cover">
+              <image src="{{ item.img }}" />
+            </view>
+            <view class="info">
+              <view class="title">{{ item.name }}</view>
+              <view>点击量：{{ item.click_count }}·{{ item.words_count }}万字</view>
+              <view>{{ item.intro }}</view>
+            </view>
+          </view>
+        </block>
+        <block wx:for="{{bookListNovel}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{ item.id }}">
+            <view class="cover">
+              <image src="{{ item.novel.img }}" />
+            </view>
+            <view class="info">
+              <view class="title">{{ item.novel.name }}</view>
+              <view>点击量：{{ item.novel.click_count }}·{{ item.novel.words_count }}万字</view>
+              <view>{{ item.novel.intro }}</view>
+            </view>
+          </view>
+        </block>
+        <!-- monthTicketBang -->
+        <view class="dataNullShow" wx:if="{{bookList.length == 0}}">暂无数据</view>
+      </view>
+    </view>
+  </scroll-view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class Booklistandtype extends wepy.page {
+  config = {
+    navigationBarTitleText: '列表包含分类'
+  }
+  // 生命组件ID
+  components = {
+
+  }
+
+  mixins = []
+
+  data = {
+    bookList: null,
+    bookListNovel: null,
+    type: '',
+    typeList: [
+      // {'name': '月票榜', 'id': '1', 'url': 'monthTicketBang'},
+      {'name': '畅销榜', 'id': '2', 'url': 'bestSaleWithSecondCategory'},
+      {'name': '点击榜', 'id': '3', 'url': 'clickWeekBang'},
+      {'name': '推荐榜', 'id': '4', 'url': 'editorRecommend'}
+    ],
+    thissecondCategoryId: '2'
+  }
+
+  computed = {}
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    changebookClass(e) {
+      let id = e.currentTarget.dataset.id
+      this.thissecondCategoryId = id
+      let url = e.currentTarget.dataset.url
+      console.log(url)
+      // 获取书列表-根据类型
+      this.getBookList(this.type, id, url)
+    },
+    // 进入书本详情
+    goBookDetails(e) {
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
+    }
+  }
+
+  events = {}
+
+  onLoad(options) {
+    // 动态修改页面标题信息
+    // 根据获取到的参数修改页面标题
+    this.type = options.typeid
+    wx.setNavigationBarTitle({
+      title: options.typename
+    })
+    // 列表加载
+    this.getBookList(this.type, this.typeList[0].id, this.typeList[0].url)
+  }
+  // 获取书列表-根据类型
+  getBookList(typeId, typeListId, url) {
+    // 判断多个链接，请求不同类型书的列表
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/${url}/${typeId}`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.bookList = null
+          this.bookListNovel = null
+          switch (url) {
+            case 'monthTicketBang':
+              // 月票榜
+              this.bookListNovel = data.data.novel_month_tickets
+              break
+            case 'bestSaleWithSecondCategory':
+              // 畅销榜
+              this.bookList = data.data.$data
+              break
+            case 'clickWeekBang':
+              // 点击榜
+              this.bookListNovel = data.data.click_week_bang
+              break
+            case 'editorRecommend':
+              // 推荐榜
+              this.bookList = data.data.novels
+              break
+            default:
+              break
+          }
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
+</script>

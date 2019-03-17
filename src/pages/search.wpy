@@ -1,0 +1,361 @@
+<style lang="less">
+  .search{
+    width: 750rpx;
+    height: 115rpx;
+    background-color: #fdfdfd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search view{
+    height: 75rpx;
+    background-color: #efefef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .search image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .search input{
+    background-color: #efefef;
+    width: 100%;
+    height: 100%;
+    color: #333;
+    font-size: 30rpx;
+  }
+  .search view:nth-child(1){
+    width: 80rpx;
+    border: 1rpx solid #f0f0f0;
+    border-right: 0;
+    border-radius: 40rpx 0 0 40rpx;
+  }
+  .search view:nth-child(2){
+    width: 520rpx;
+    border-top: 1rpx solid #f0f0f0;
+    border-bottom: 1rpx solid #f0f0f0;
+  }
+  .search view:nth-child(3){
+    width: 80rpx;
+    border: 1rpx solid #f0f0f0;
+    border-left: 0;
+    border-radius: 0 40rpx 40rpx 0;
+  }
+  .searchHistoryTitle{
+    width: 750rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+  }
+  .searchHistoryTitle view{
+    width: auto;
+    height: 60rpx;
+    line-height: 60rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 33rpx;
+    color: #999;
+    font-size: 35rpx;
+  }
+  .searchHistoryTitle image{
+    width: 40rpx;
+    height: 40rpx;
+  }
+  .searchHistoryTitle view:nth-child(1){
+    font-weight: 600;
+    color: #333;
+    float: left;
+  }
+  .searchHistoryTitle view:nth-child(2){
+    float: right;
+  }
+  .searchHistory{
+    width: 680rpx;
+    margin: 0 33rpx;
+  }
+  .searchHistory view{
+    width: auto;
+    height: 45rpx;
+    line-height: 45rpx;
+    padding: 0 20rpx;
+    display:inline-block;
+    margin: 20rpx;
+    background-color: #e5ecf2;
+    color: #999;
+    border-radius: 10rpx;
+    font-size: 30rpx;
+  }
+  .bookList{
+    width: 750rpx;
+    height: auto;
+    // margin-bottom: 120rpx;
+  }
+  .list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 175rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+    background-color: #fafafa;
+    padding: 20rpx 20rpx;
+  }
+  .list .cover{
+    width: 107rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .list .cover image{
+    width: 107rpx;
+    height: 146rpx;
+  }
+  .list .info{
+    margin-left: 20rpx;
+    width: 597rpx;
+    height: 146rpx;
+    // border: 1rpx solid red;
+  }
+  .list .info view,
+  .list .info text{
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #999;
+    font-size: 25rpx;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .list .info .title{
+    color: #333;
+    height: 60rpx;
+    line-height: 70rpx;
+    font-size: 30rpx;
+    font-size: 600;
+  }
+  .list .operating{
+    width: 107rpx;
+    height: 146rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // border: 1rpx solid red;
+  }
+  .list .operating image{
+    width: 47rpx;
+    height: 47rpx;
+  }
+  .search .iconfont{
+    color: #999;
+    font-size: 36rpx;
+    line-height: 75rpx;
+  }
+  .recommendNovelsClass{
+    margin-bottom: 120rpx;
+  }
+</style>
+<template>
+  <view>
+    <view class="search">
+      <view>
+        <icon class="iconfont icon-sousuo" />
+      </view>
+      <view>
+        <input type="text" value="{{searchKey}}" bindinput="searchBook" placeholder="找书" />
+      </view>
+      <view @tap="inputReset">
+        <icon class="iconfont icon-quxiao" />
+      </view>
+    </view>
+    <view class="searchHistoryTitle" wx:if="{{hotWord.length > 0}}">
+      <view>搜索热词</view>
+    </view>
+    <view class="searchHistory" wx:if="{{hotWord.length > 0}}">
+      <block wx:for="{{hotWord}}" key="index" index="index" item="item">
+        <view @tap="clicklabel" data-name="{{item.words}}">{{item.words}}</view>
+      </block>
+    </view>
+    <!-- 搜索结果 -->
+    <view class="bookList">
+      <block wx:for="{{searchBook}}" key="index" index="index" item="item">
+        <view class="list" data-id="{{item.id}}"  @tap="goBookDetails">
+          <view class="cover">
+            <image src="{{item.img}}" />
+          </view>
+          <view class="info">
+            <view class="title">{{item.name}}</view>
+            <view>
+              <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+              <text wx:elif>完结</text>
+               | 
+              {{item.words_count}}字
+            </view>
+            <view>点击量:{{item.click_count}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <view class="searchHistoryTitle">
+      <view>为您推荐</view>
+    </view>
+    <view class="bookList recommendNovelsClass">
+      <block wx:for="{{recommendNovels}}" key="index" index="index" item="item">
+        <view class="list" data-id="{{item.id}}"  @tap="goBookDetails">
+          <view class="cover">
+            <image src="{{item.img}}" />
+          </view>
+          <view class="info">
+            <view class="title">{{item.name}}</view>
+            <view>
+              <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+              <text wx:elif>完结</text>
+               | 
+              {{item.words_count}}字
+            </view>
+            <view>点击量:{{item.click_count}}</view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Search extends wepy.page {
+  config = {
+    navigationBarTitleText: '搜索'
+  }
+  components = {
+    // 底部导航
+    nav: nav
+  }
+
+  mixins = []
+
+  data = {
+    imgUrl: '',
+    searchKey: '', // 搜索key
+    searchBook: [], // 搜索到的书
+    hotWord: [], // 热词
+    recommendNovels: [] // 猜你喜欢
+  }
+
+  computed = {}
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    // 清空搜索框中的值
+    inputReset() {
+      // 使用this.searchKey = ''无用
+      this.setData({
+        searchKey: ''
+      })
+    },
+    // 搜索
+    searchBook(e) {
+      let searchKey = e.detail.value
+      if (searchKey === '') {
+        return ''
+      }
+      // 执行搜索
+      this.runSearch(searchKey)
+    },
+    // 标签搜索
+    clicklabel(e) {
+      let searchKey = e.currentTarget.dataset.name
+      if (searchKey === '') {
+        return ''
+      }
+      // 执行搜索
+      this.runSearch(searchKey)
+    },
+    // 进入书本详情
+    goBookDetails(e) {
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
+    }
+  }
+
+  events = {}
+
+  onLoad() {
+    this.imgUrl = this.$parent.globalData.imgUrl
+    // 热词
+    this.getHotWords()
+    // 猜你喜欢
+    this.recommendNovel()
+  }
+  // 搜索
+  runSearch(searchKey) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/searchNovel`,
+      method: 'GET',
+      data: {
+        novel_name: searchKey
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.novels
+          this.searchBook = data.data
+          // this.searchBook = this.$parent.getImgUrlList(this.searchBook)
+          // this.nextUrl = data.meta
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 热词
+  getHotWords() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/hotWords`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.hotWord = data.data.hot_words
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 猜你喜欢
+  recommendNovel() {
+    // 判断多个链接，请求不同类型书的列表
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/recommendNovel`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          this.recommendNovels = data.data.recommend_novels
+          // this.recommendNovels = this.$parent.getImgUrlList(this.recommendNovels)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
+</script>

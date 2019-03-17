@@ -1,0 +1,471 @@
+<style lang="less">
+  page{
+    background-color: #f7f7f7;
+  }
+  .icon-jiantou{
+    color: #c6c6c6;
+  }
+  .icon-xingxing,
+  .icon-yanjing,
+  .icon-yueliang,
+  .icon-book{
+    color: #00aa91;
+  }
+  .userinfo{
+    background-color: #fff;
+    background-image: url('https://fiction.beaconway.cn/uploads/images/userBG.png');
+    background-size: 100% 100%;
+    height: 332rpx;
+    padding: 20rpx 35rpx;
+    // border-bottom: 1rpx solid #dcdcdc;
+    margin-bottom: 16rpx;
+  }
+  .userinfo image {
+    width: 172rpx;
+    height: 172rpx;
+    border-radius: 86rpx;
+  }
+  .userinfo view {
+    width: 680rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32rpx;
+    color: rgb(42, 42, 42)
+  }
+  .userinfo view:nth-child(1) {
+    margin-top: 74rpx;
+  }
+  .userinfo view:nth-child(2) {
+    margin-top: 32rpx;
+  }
+  .recharge{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20rpx 35rpx;
+    background-color: #fff;
+    margin: 20rpx 0;
+  }
+  .recharge view{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .recharge .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    width: 45rpx;
+    height: 45rpx;
+    border-radius: 26rpx;
+    background-color: #ffc408;
+    margin-right: 20rpx;
+  }
+  .rechargeButton{
+    width: 120rpx;
+    height: 50rpx;
+    color: #fff;
+    border-radius: 10rpx;
+    background-color: #00aa91;
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+  }
+
+  .list{
+    padding: 20rpx 35rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    height: 50rpx;
+    border-bottom: 0.1rpx solid #eee;
+    color: #333;
+    vertical-align:middle;
+    box-sizing:content-box;
+  }
+  button::after{
+    border: none;
+  }
+  .list{
+    height: 65rpx;
+    line-height: 65rpx;
+    font-size: 28rpx;
+  }
+  .list view,
+  .list text{
+    font-size: 30rpx;
+  }
+  .list view:nth-child(1) icon{
+    color: #00aa91;
+    font-size: 37rpx;
+    margin-right: 17rpx;
+  }
+  .list view:nth-child(2) icon{
+    color: #666;
+  }
+  .user .list:nth-child(1){
+    border-top: 0;
+  }
+  .user .list:nth-child(8){
+    border-bottom: 0;
+    margin-bottom: 120rpx;
+  }
+  // .user .list:last-of-type{
+  //   border-bottom: 0;
+  //   margin-bottom: 120rpx;
+  // }
+  .info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 750rpx;
+    height: 84rpx;
+    background: #fff;
+  }
+  .info view{
+    width: 360rpx;
+    height: 50rpx;
+    border-right: 1rpx solid #dcdcdc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .info view:nth-child(2){
+    border-width: 0;
+  }
+  .signIn{
+    width: 150rpx !important;
+    height: 46rpx;
+    line-height: 46rpx;
+    border-radius: 23rpx;
+    font-size: 25rpx !important;
+    background-color: #b69f8d;
+    color: #fff !important;
+    position: absolute;
+    top: 76rpx;
+    right: 20rpx;
+  }
+  .signIn2{
+    min-width: 150rpx !important;
+    width: auto !important;
+    height: 46rpx;
+    line-height: 46rpx;
+    padding: 0 10rpx;
+    border-radius: 23rpx;
+    font-size: 25rpx !important;
+    background-color: #b4b4b4;
+    color: #fff !important;
+    position: absolute;
+    top: 76rpx;
+    right: 20rpx;
+  }
+  .signIn icon{
+    font-size: 44rpx !important;
+  }
+  .icon-jiantou{
+    font-size: 29rpx;
+  }
+  .developerInfo{
+    height: auto;
+    color: #666;
+    margin-top:100rpx;
+    margin-bottom:120rpx;
+    text-align: center;
+  }
+  .developerName{
+    font-weight: 700
+  }
+  .developerInfo view{
+    font-size: 20rpx !important;
+    height: auto;
+    min-height: 40rpx;
+    line-height: 40rpx;
+  }
+  .developerPhone{
+    display: inline-block;
+  }
+  .developerPhone view{
+    font-size: 20rpx !important;
+    // width: 150rpx;
+    display: inline-block;
+  }
+</style>
+<template>
+  <view class="user">
+    <view class="userinfo">
+      <view>
+        <image src="{{userInfo.profile}}" />
+      </view>
+      <view>{{userInfo.nick_name}}</view>
+      <view class="signIn" @tap="signIn" wx:if="{{signInDay === 0}}">
+        每日签到
+      </view>
+      <view class="signIn2" wx:if="{{signInDay > 0}}">
+        已签到{{signInDay}}天
+      </view>
+    </view>
+    <view class="list" wx:if="{{payShow}}">
+      <view>
+        <icon class="iconfont icon-money" />
+        <text>{{userInfo.bi_count}}点</text>
+      </view>
+      <view class="rechargeButton" @tap="goPay">充值</view>
+    </view>
+    <view class="list">
+      <view>
+        <icon class="iconfont icon-shenqingchengweiVIP" />
+        等级
+      </view>
+      <view>
+        <icon class="iconfont icon-vip{{userInfo.level}}" />
+        <!-- <icon class="iconfont icon-jiantou" /> -->
+      </view>
+    </view>
+    <view class="list">
+      <view>
+        <icon class="iconfont icon-piao" />
+        推荐票
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantou" />
+      </view>
+    </view>
+    <button class="list" open-type="contact" session-from="weapp">
+      <view>
+        <icon class="iconfont icon-xiaoxi" />
+        联系我们
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantou" />
+      </view>
+    </button>
+    <view class="list" @tap="joinAuthor">
+      <view>
+        <icon class="iconfont icon-shusheng" />
+        加入作者
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantou" />
+      </view>
+    </view>
+    <view class="list" @tap="description">
+      <view>
+        <icon class="iconfont icon-yanjing" />
+        阅读说明
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantou" />
+      </view>
+    </view>
+    <view class="list" @tap="goHelp">
+      <view>
+        <icon class="iconfont icon-bangzhu" />
+        帮助
+      </view>
+      <view>
+        <icon class="iconfont icon-jiantou" />
+      </view>
+    </view>
+    <!-- <view class="developerInfo">
+      <view class="developerName">联系我们</view>
+      <view>©2019 陕西贝肯伟网络科技有限公司 版权所有</view>
+      <view class="developerPhone">
+        联系电话：
+        <view @tap="developerPhone" data-phone="029-84498995 ">029-84498995(点击拨打) </view>
+      </view>
+      <view @tap="developerAddress">陕西省西安市高新区天谷八路软件新城研发基地二期A9栋405室</view>
+    </view> -->
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import nav from '../components/nav' // 底部导航
+  export default class User extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的'
+    }
+    // 生命组件ID
+    components = {
+      // 底部导航
+      nav: nav
+    }
+
+    mixins = []
+
+    data = {
+      userInfo: null,
+      openId: '',
+      signInName: '签到',
+      signInDay: 0,
+      payShow: false
+    }
+
+    computed = {}
+
+    methods = {
+      // 底部导航跳转
+      goPage (url, evt) {
+        // 销毁当前页{跳转}
+        this.$redirect(url)
+      },
+      goPay () {
+        this.$navigate(`/pages/pay`)
+      },
+      goHelp () {
+        this.$navigate(`/pages/help`)
+      },
+      joinAuthor () {
+        this.$navigate(`/pages/getAuthorCon`)
+      },
+      description() {
+        this.$navigate(`/pages/readDescription`)
+      },
+      // 拨打公司电话
+      developerPhone(e) {
+        let phone = e.target.dataset.phone
+        if (phone) {
+          wx.makePhoneCall({
+            phoneNumber: phone,
+            success: function () {
+              console.log('拨打电话成功！')
+            },
+            fail: function () {
+              console.log('拨打电话失败！')
+            }
+          })
+        }
+      }
+    }
+
+    events = {}
+
+    onLoad() {
+      // 个人信息初始化
+      this.userInfo = this.$parent.globalData.userInfo
+      this.openId = this.$parent.globalData.openId
+      this.$apply()
+      this.getSystemInfoRun()
+    }
+    getSystemInfoRun() {
+      wx.getSystemInfo({
+        success: res => {
+          let systemInfo = res.system
+          if (systemInfo.indexOf('iOS') != -1) {
+            this.payShow = false
+          } else {
+            this.payShow = true
+          }
+          this.$apply()
+        }
+      })
+    }
+    // 签到
+    signIn() {
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
+        method: 'PUT',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
+        success: data => {
+          if (data.data.success) {
+            this.signInDay = data.data.data.continuous_day.continuous_day
+            this.signInName = '已签到'
+            this.$apply()
+          }
+        }
+      })
+    }
+    // 添加小说
+    // login() {
+    //   wx.request({
+    //     url: `${this.$parent.globalData.requestUrl}/backend/login`,
+    //     method: 'POST',
+    //     header: {
+    //       AuthrizeOpenId: 1
+    //     },
+    //     data: {
+    //       account: "luow",
+    //       password: '123456'
+    //     },
+    //     success: data => {
+    //       console.log(data)
+    //       if (data.data.success) {} else {
+    //         wx.showModal({
+    //           title: '',
+    //           content: data.data.errmsg
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+    // // 添加小说
+    // createNovel() {
+    //   wx.request({
+    //     url: `${this.$parent.globalData.requestUrl}/backend/createNovel`,
+    //     method: 'POST',
+    //     header: {
+    //       Authorization: 1
+    //     },
+    //     data: {
+    //       name: "吃33个香蕉皮",
+    //       novel_categories_id: 4
+    //     },
+    //     success: data => {
+    //       console.log(data)
+    //       if (data.data.success) {
+    //       } else {
+    //         wx.showModal({
+    //           title: '',
+    //           content: data.data.errmsg
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+    // // 作者申请
+    // applicateToBeAnAnthor() {
+    //   // 作者信息
+    //   // account:"luow"
+    //   // created_at:"2018-12-29 09:29:13"
+    //   // id:1
+    //   // id_number:"61012419930125273X"
+    //   // password:"$2y$10$Sas1tpsZnPxgcx8j7RVUQe8qWj497vscHA7B8t.rPrJJc2d08CLAK"
+    //   // pen_name:"山下日狗"
+    //   // profile:"https://wx.qlogo.cn/mmopen/vi_32/90DWsNicbNLISvKpBn6oGMN0sxSrPTicVUsO2DiaB64nu9qP3uAZUJZ7r1m5jnPfPLtqibVpia2lHZGMcosQmpFfN4w/132"
+    //   // real_name:"雒伟"
+    //   // updated_at:"2018-12-29 09:29:13"
+    //   // user_id:1
+    //   wx.request({
+    //     url: `${this.$parent.globalData.requestUrl}/api/applicateToBeAnAnthor`,
+    //     method: 'POST',
+    //     header: {
+    //       AuthrizeOpenId: this.$parent.globalData.openId
+    //     },
+    //     data: {
+    //       real_name: "雒伟",
+    //       pen_name: "山下日狗",
+    //       id_number: "61012419930125273X",
+    //       profile: "https://wx.qlogo.cn/mmopen/vi_32/90DWsNicbNLISvKpBn6oGMN0sxSrPTicVUsO2DiaB64nu9qP3uAZUJZ7r1m5jnPfPLtqibVpia2lHZGMcosQmpFfN4w/132",
+    //       account: "luow",
+    //       password: "123456"
+    //     },
+    //     success: data => {
+    //       if (data.data.success) {
+    //         console.log(data)
+    //       } else {
+    //         wx.showModal({
+    //           title: '',
+    //           content: data.data.errmsg
+    //         })
+    //       }
+    //     }
+    //   })
+    // }
+  }
+</script>

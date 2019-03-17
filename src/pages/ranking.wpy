@@ -1,0 +1,355 @@
+<style lang="less">
+.listTitle{
+  padding: 0 20rpx;
+  width: 710rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.listTitle view:nth-child(1){
+  font-weight: 600;
+}
+.listTitle view:nth-child(2){
+  width: 80rpx;
+  height: 45rpx;
+  line-height: 45rpx;
+  text-align: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 25rpx;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+}
+// 男
+.male{
+  background-color: #00c0a4;
+}
+// 女
+.female{
+  background-color: #f95353;
+}
+.list-sidelong{
+  width: 710rpx;
+  padding: 0 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.list-sidelong .item{
+  width: 210rpx;
+  height: 350rpx;
+  padding: 20rpx;
+}
+.list-sidelong .item image{
+  width: 210rpx;
+  height: 300rpx;
+}
+.list-sidelong .name, .list-sidelong .description{
+  width: 210rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.name{
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+}
+.con{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20rpx;
+  width: 710rpx;
+  height: 175rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background-color: #fff;
+}
+.con .cover{
+  width: 107rpx;
+  height: 146rpx;
+  // border: 1rpx solid red;
+}
+.con .cover image{
+  width: 107rpx;
+  height: 146rpx;
+}
+.con .info{
+  margin-left: 20rpx;
+  width: 615rpx;
+  height: 146rpx;
+  // border: 1rpx solid red;
+}
+.con .info view,
+.con .info text{
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  color: #999;
+  font-size: 25rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.con .info .title{
+  color: #333;
+  height: 60rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
+  font-size: 600;
+}
+.goList{
+  width: 710rpx;
+  padding: 20rpx;
+  font-size: 30rpx;
+  color: #0066CC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav_padding{
+  padding-bottom: 130rpx;
+}
+</style>
+<template>
+  <view>
+    <view class="nav_padding">
+      <navTop @childFn.user="goPage" />
+      <view class="listTitle">
+        <view>{{thisTypeName}}人气榜</view>
+        <view wx:if="{{sex == '1'}}" @tap="selType" class="male" data-typename="人气榜">
+          男生
+        </view>
+        <view wx:if="{{sex == '2'}}" @tap="selType" class="female" data-typename="人气榜">
+          女生
+        </view>
+      </view>
+      <view class="list-sidelong">
+        <block wx:for="{{sellSellData1}}" key="index" index="index" item="item">
+          <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
+            <image src="{{item.img}}" />
+            <view class="name">{{item.name}}</view>
+          </view>
+        </block>
+      </view>
+      <view class="list-vertical">
+        <block wx:for="{{sellSellData2}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="{{item.img}}" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>
+                <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                <text wx:elif>完结</text>
+                  · {{item.words_count}}万字</view>
+              <view>{{item.intro}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}人气榜" data-url="popularity_ranking" @tap="goList">查看人气榜</view>
+      <view class="listTitle">
+        <view>{{thisTypeName}}热销榜</view>
+        <view wx:if="{{sex == '1'}}" @tap="selType" class="male" data-typename="人气榜">
+          男生
+        </view>
+        <view wx:if="{{sex == '2'}}" @tap="selType" class="female" data-typename="人气榜">
+          女生
+        </view>
+      </view>
+      <view class="list-sidelong">
+        <block wx:for="{{popularityData1}}" key="index" index="index" item="item">
+          <view class="item" @tap="goBookDetails" data-id="{{item.id}}">
+            <image src="{{item.img}}" />
+            <view class="name">{{item.name}}</view>
+          </view>
+        </block>
+      </view>
+      <view class="list-vertical">
+        <block wx:for="{{popularityData2}}" key="index" index="index" item="item">
+          <view class="con" @tap="goBookDetails" data-id="{{item.id}}">
+            <view class="cover">
+              <image src="{{item.img}}" />
+            </view>
+            <view class="info">
+              <view class="title">{{item.name}}</view>
+              <view>
+                <text wx:if="{{item.wether_complete === 'Uncompelete'}}">连载</text>
+                <text wx:elif>完结</text>
+                  · {{item.words_count}}万字</view>
+              <view>{{item.intro}}</view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="goList" data-id="{{thisfirstCategoryId}}" data-typename="{{thisTypeName}}热销榜" data-url="best_seller_ranking" @tap="goList">查看热销榜</view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import navTop from '../components/navTop' // 顶部导航
+import nav from '../components/nav' // 底部导航
+export default class User extends wepy.page {
+  config = {
+    navigationBarTitleText: '排行'
+  }
+  // 生命组件ID
+  components = {
+    // 底部导航
+    nav: nav,
+    navTop: navTop
+  }
+
+  mixins = []
+
+  data = {
+    userInfo: null,
+    openId: '',
+    typeClass: 'female',
+    thisTypeName: '男生',
+    typeName: '女生',
+    sellSellData: [],
+    sellSellData1: [],
+    sellSellData2: [],
+    popularityData: [],
+    popularityData1: [],
+    popularityData2: [],
+    listLength: 7, // 控制列表显示的长短
+    sex: '1'
+  }
+
+  computed = {}
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    // 进入书本详情
+    goBookDetails(e) {
+      let id = e.currentTarget.dataset.id
+      this.$navigate(`/pages/details?bookid=${id}`)
+    },
+    selType() {
+      if (this.sex === '1') {
+        this.sex = '2'
+      } else {
+        this.sex = '1'
+      }
+      this.sellSellList()
+      this.popularityList()
+      this.$apply()
+    },
+    goList(e) {
+      let typename = e.currentTarget.dataset.typename
+      let url = e.currentTarget.dataset.url
+      let data = null
+      if (url === 'bestSeller') {
+        data = this.sellSellData
+      } else {
+        data = this.popularityData
+      }
+      data = JSON.stringify(data)
+      this.$navigate(`/pages/indexSonList?typename=${typename}&url=${url}&listdata=${data}&sex=${this.sex}`)
+    }
+  }
+
+  events = {}
+
+  async onLoad() {
+    // 个人信息初始化
+    this.userInfo = this.$parent.globalData.userInfo
+    this.openId = this.$parent.globalData.openId
+    this.$apply()
+    this.sellSellList()
+    this.popularityList()
+  }
+  // 热销榜
+  sellSellList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/best_seller_ranking`,
+      method: 'POST',
+      data:{
+        id: '0',
+        sex: this.sex
+      },
+      //1男  2女
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.sellSellData = data.data.data
+          console.log(this.sellSellData)
+          this.sellSellData1 = []
+          this.sellSellData2 = []
+          if (this.sellSellData.length >= 3) {
+            this.sellSellData1 = [this.sellSellData[0], this.sellSellData[1], this.sellSellData[2]]
+          }
+          if (this.sellSellData.length > 3) {
+            for (let i = 3; i < this.sellSellData.length; i++) {
+              if (this.sellSellData.length > i) {
+                this.sellSellData2.push(this.sellSellData[i])
+              }
+            }
+          }
+          console.log(this.sellSellData1)
+          console.log(this.sellSellData2)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 人气榜
+  popularityList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/popularity_ranking`,
+      method: 'POST',
+      data:{
+        id: '0',
+        sex: this.sex
+      },
+      //1男  2女
+      success: data => {
+        if (data.data.code === 'ture') {
+          this.popularityData = data.data.data
+          console.log(this.popularityData)
+          this.popularityData1 = []
+          this.popularityData2 = []
+          if (this.popularityData.length >= 3) {
+            this.popularityData1 = [this.popularityData[0], this.popularityData[1], this.popularityData[2]]
+          }
+          if (this.popularityData.length > 3) {
+            for (let i = 3; i < this.popularityData.length; i++) {
+              if (this.popularityData.length > i) {
+                this.popularityData2.push(this.popularityData[i])
+              }
+            }
+          }
+          console.log(this.popularityData1)
+          console.log(this.popularityData2)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
+</script>
